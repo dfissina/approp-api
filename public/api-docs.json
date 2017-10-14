@@ -4,6 +4,10 @@
   "basePath": "http://localhost:3000",
   "apis": [
     {
+      "path": "/users.{format}",
+      "description": "Users Managment"
+    },
+    {
       "path": "/authentication.{format}",
       "description": "Authentication Managment"
     }

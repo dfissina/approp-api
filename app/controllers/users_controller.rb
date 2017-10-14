@@ -1,13 +1,31 @@
 class UsersController < ApplicationController
+
+  swagger_controller :users, 'Users Managment'
   
   skip_before_action :authorize_request, only: :create
   
   before_action :set_user, only: [:show, :update, :destroy]
-    
+
+  swagger_api :index do
+    summary 'List Users'
+    param :header, :Authorization, :string, :required, 'Token'
+  end
+
   # GET /users
   def index
     @users = User.all
     json_response(@users)
+  end
+
+  swagger_api :create do
+    summary 'Sign Up'
+    param :form, :first_name, :string, :required, 'Nombre'
+    param :form, :last_name, :string, :required, 'Apellido'
+    param :form, :email, :string, :required, 'Email'
+    param :form, :password, :string, :required, 'Password'
+    param :form, :birth_date, :string, :required, 'Fecha Nacimiento'
+    param :form, :phone, :string, :required, 'Teléfono'
+    param :form, :cell_phone, :string, :required, 'Celular'
   end
 
   # POST /signup
@@ -19,15 +37,41 @@ class UsersController < ApplicationController
     json_response(response, :created)
   end
 
+  swagger_api :show do
+    summary 'Show user'
+    param :path, :id, :integer, :required, 'Id'
+    param :header, :Authorization, :string, :required, 'Token'
+    response :unauthorized
+  end
+
   # GET /users/:id
   def show
    json_response(@user)
+  end
+
+  swagger_api :update do
+    summary 'Editar usuario'
+    param :header, :Authorization, :string, :required, 'Token'
+    param :path, :id, :integer, :required, 'Id'
+    param :form, :first_name, :string, :optional, 'Nombre'
+    param :form, :last_name, :string, :optional, 'Apellido'
+    param :form, :email, :string, :optional, 'Email'
+    param :form, :password, :string, :optional, 'Password'
+    param :form, :birth_date, :string, :optional, 'Fecha Nacimiento'
+    param :form, :phone, :string, :optional, 'Teléfono'
+    param :form, :cell_phone, :string, :optional, 'Celular'
   end
 
   # PUT /users/:id
   def update
     @user.update(user_params)
     head :no_content
+  end
+
+  swagger_api :destroy do
+    summary 'Borrar user'
+    param :header, :Authorization, :string, :required, 'Token'
+    param :path, :id, :integer, :required, 'Id'
   end
 
   # DELETE /users/:id
