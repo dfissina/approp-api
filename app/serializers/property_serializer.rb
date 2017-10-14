@@ -5,4 +5,5 @@ class PropertySerializer < ActiveModel::Serializer
   # response model association
   #belongs_to :user
   
+  belongs_to :comuna
 end
