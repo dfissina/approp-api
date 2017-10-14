@@ -1,0 +1,197 @@
+{
+  "apiVersion": "1.0",
+  "swaggerVersion": "1.2",
+  "basePath": "http://localhost:3000",
+  "resourcePath": "users",
+  "apis": [
+    {
+      "path": "/users",
+      "operations": [
+        {
+          "summary": "List Users",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Token",
+              "required": true
+            }
+          ],
+          "nickname": "Users#index",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/users",
+      "operations": [
+        {
+          "summary": "Sign Up",
+          "parameters": [
+            {
+              "paramType": "form",
+              "name": "first_name",
+              "type": "string",
+              "description": "Nombre",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "last_name",
+              "type": "string",
+              "description": "Apellido",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "email",
+              "type": "string",
+              "description": "Email",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "password",
+              "type": "string",
+              "description": "Password",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "birth_date",
+              "type": "string",
+              "description": "Fecha Nacimiento",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "phone",
+              "type": "string",
+              "description": "Teléfono",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "cell_phone",
+              "type": "string",
+              "description": "Celular",
+              "required": true
+            }
+          ],
+          "nickname": "Users#create",
+          "method": "post"
+        }
+      ]
+    },
+    {
+      "path": "/users/{id}",
+      "operations": [
+        {
+          "summary": "Show user",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "id",
+              "type": "integer",
+              "description": "Id",
+              "required": true
+            },
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Token",
+              "required": true
+            }
+          ],
+          "responseMessages": [
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "Unauthorized"
+            }
+          ],
+          "nickname": "Users#show",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/users/{id}",
+      "operations": [
+        {
+          "summary": "Editar usuario",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Token",
+              "required": true
+            },
+            {
+              "paramType": "path",
+              "name": "id",
+              "type": "integer",
+              "description": "Id",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "first_name",
+              "type": "string",
+              "description": "Nombre",
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "last_name",
+              "type": "string",
+              "description": "Apellido",
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "email",
+              "type": "string",
+              "description": "Email",
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "password",
+              "type": "string",
+              "description": "Password",
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "birth_date",
+              "type": "string",
+              "description": "Fecha Nacimiento",
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "phone",
+              "type": "string",
+              "description": "Teléfono",
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "cell_phone",
+              "type": "string",
+              "description": "Celular",
+              "required": false
+            }
+          ],
+          "nickname": "Users#update",
+          "method": "patch"
+        }
+      ]
+    }
+  ],
+  "authorizations": null
+}
