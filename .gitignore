@@ -18,3 +18,9 @@
 !/tmp/.keep
 
 .byebug_history
+
+node_modules/
+.project
+.settings/
+
+.idea/*
