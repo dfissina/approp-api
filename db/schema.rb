@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171014191003) do
+ActiveRecord::Schema.define(version: 20171014232537) do
 
   create_table "comunas", force: :cascade do |t|
     t.string "name"
@@ -20,6 +20,33 @@ ActiveRecord::Schema.define(version: 20171014191003) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["region_id"], name: "index_comunas_on_region_id"
+  end
+
+  create_table "dislikes", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "property_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["property_id"], name: "index_dislikes_on_property_id"
+    t.index ["user_id"], name: "index_dislikes_on_user_id"
+  end
+
+  create_table "favourites", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "property_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["property_id"], name: "index_favourites_on_property_id"
+    t.index ["user_id"], name: "index_favourites_on_user_id"
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "property_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["property_id"], name: "index_likes_on_property_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "properties", force: :cascade do |t|

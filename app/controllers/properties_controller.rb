@@ -29,7 +29,7 @@ class PropertiesController < ApplicationController
    @property.destroy
    head :no_content
   end
-
+  
 
   private  
 

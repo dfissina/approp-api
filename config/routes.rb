@@ -10,10 +10,21 @@ Rails.application.routes.draw do
   resources :comunas do
   end
   
+  resources :likes do
+  end
+  
+  resources :dislikes do
+  end
+  
+  resources :favourites do
+  end
+  
   #resources :properties do    
   #end
   
   post 'auth/login', to: 'authentication#authenticate'
   
   post 'signup', to: 'users#create'
+  
+  
 end
