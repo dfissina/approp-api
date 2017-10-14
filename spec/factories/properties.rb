@@ -12,6 +12,15 @@ FactoryGirl.define do
     state %w[nueva usada].sample
     currency %w[uf clp].sample  
     user_id nil
-    #created_by { Faker::Number.number(10) }
+    street {Faker::Address.street_name}
+    number {Faker::Address.building_number}
+    departament {Faker::Number.between(1, 10)}
+    neighborhood {Faker::Address.community}
+    show_pin_map true
+    comuna_id nil   
+    condominium true
+    furniture true
+    orientation %w[norte sur oriente poniente norte_sur nororiente norponiente].sample
+    pets true
   end
 end

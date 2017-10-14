@@ -54,7 +54,19 @@ class PropertiesController < ApplicationController
       :property_type,
       :operation,
       :state,
-      :currency      
+      :currency,
+      :street,
+      :number,
+      :neighborhood,
+      :show_pin_map,
+      :comuna_id,
+      :condominium,
+      :furniture,
+      :orientation,
+      :parking_lots,
+      :cellar,
+      :expenses,
+      :pets    
     )
   end
 end

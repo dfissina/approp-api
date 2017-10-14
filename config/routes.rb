@@ -4,6 +4,12 @@ Rails.application.routes.draw do
     resources :properties
   end
   
+  resources :regions do
+  end
+   
+  resources :comunas do
+  end
+  
   #resources :properties do    
   #end
   

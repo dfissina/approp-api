@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171008171147) do
+ActiveRecord::Schema.define(version: 20171014191003) do
+
+  create_table "comunas", force: :cascade do |t|
+    t.string "name"
+    t.float "lat"
+    t.float "lng"
+    t.integer "region_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["region_id"], name: "index_comunas_on_region_id"
+  end
 
   create_table "properties", force: :cascade do |t|
     t.string "title"
@@ -27,7 +37,31 @@ ActiveRecord::Schema.define(version: 20171008171147) do
     t.integer "operation"
     t.integer "state"
     t.integer "currency"
+    t.string "street"
+    t.integer "number"
+    t.integer "departament"
+    t.string "tower"
+    t.string "neighborhood"
+    t.boolean "show_pin_map"
+    t.integer "comuna_id"
+    t.boolean "condominium"
+    t.boolean "furniture"
+    t.integer "orientation"
+    t.integer "parking_lots"
+    t.integer "cellar"
+    t.decimal "expenses"
+    t.boolean "pets"
+    t.boolean "terrace"
+    t.index ["comuna_id"], name: "index_properties_on_comuna_id"
     t.index ["user_id"], name: "index_properties_on_user_id"
+  end
+
+  create_table "regions", force: :cascade do |t|
+    t.string "name"
+    t.float "lat"
+    t.float "lng"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
