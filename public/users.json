@@ -191,6 +191,32 @@
           "method": "patch"
         }
       ]
+    },
+    {
+      "path": "/users/{id}",
+      "operations": [
+        {
+          "summary": "Borrar user",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Token",
+              "required": true
+            },
+            {
+              "paramType": "path",
+              "name": "id",
+              "type": "integer",
+              "description": "Id",
+              "required": true
+            }
+          ],
+          "nickname": "Users#destroy",
+          "method": "delete"
+        }
+      ]
     }
   ],
   "authorizations": null
