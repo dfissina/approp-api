@@ -21,11 +21,11 @@ class UsersController < ApplicationController
     summary 'Sign Up'
     param :form, :first_name, :string, :required, 'Nombre'
     param :form, :last_name, :string, :required, 'Apellido'
-    param :form, :email, :string, :required, 'Email'
-    param :form, :password, :string, :required, 'Password'
+    param :form, :email, :email, :required, 'Email'
+    param :form, :password, :string, :required, 'Constraseña'
     param :form, :birth_date, :string, :required, 'Fecha Nacimiento'
     param :form, :phone, :string, :required, 'Teléfono'
-    param :form, :cell_phone, :string, :required, 'Celular'
+    param :form, :cell_phone, :string, :required, 'Teléfono Celular'
   end
 
   # POST /signup
@@ -40,7 +40,7 @@ class UsersController < ApplicationController
   swagger_api :show do
     summary 'Show user'
     param :path, :id, :integer, :required, 'Id'
-    param :header, :Authorization, :string, :required, 'Token'
+    param :header, :Authorization, :string, :required, 'Authorization'
     response :unauthorized
   end
 
@@ -50,8 +50,7 @@ class UsersController < ApplicationController
   end
 
   swagger_api :update do
-    summary 'Editar usuario'
-    param :header, :Authorization, :string, :required, 'Token'
+    summary 'Edit user'
     param :path, :id, :integer, :required, 'Id'
     param :form, :first_name, :string, :optional, 'Nombre'
     param :form, :last_name, :string, :optional, 'Apellido'
@@ -60,6 +59,7 @@ class UsersController < ApplicationController
     param :form, :birth_date, :string, :optional, 'Fecha Nacimiento'
     param :form, :phone, :string, :optional, 'Teléfono'
     param :form, :cell_phone, :string, :optional, 'Celular'
+    param :header, :Authorization, :string, :required, 'Authorization'
   end
 
   # PUT /users/:id
@@ -69,9 +69,9 @@ class UsersController < ApplicationController
   end
 
   swagger_api :destroy do
-    summary 'Borrar user'
-    param :header, :Authorization, :string, :required, 'Token'
+    summary 'Delete user'
     param :path, :id, :integer, :required, 'Id'
+    param :header, :Authorization, :string, :required, 'Authorization'
   end
 
   # DELETE /users/:id

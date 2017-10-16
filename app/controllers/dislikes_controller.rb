@@ -1,4 +1,6 @@
 class DislikesController < ApplicationController
+
+  swagger_controller :dislike, 'Dislikes Managment'
   
   # GET /dislikes
   def index
@@ -23,6 +25,33 @@ class DislikesController < ApplicationController
    @dislike = Dislike.find(params[:id])
    @dislike.destroy
    head :no_content
+  end
+
+  swagger_api :index do
+    summary 'Show  all likes'
+    param :header, :Authorization, :string, :required, 'Authorization'
+    response :unauthorized
+  end
+
+  swagger_api :show do
+    summary 'Show  dislike'
+    param :path, :id, :integer, :required, 'Dislike id'
+    param :header, :Authorization, :string, :required, 'Authorization'
+    response :unauthorized
+  end
+
+  swagger_api :create do
+    summary 'Create dislikes'
+    param :form, :property_id, :integer, :required, 'Property id'
+    param :header, :Authorization, :string, :required, 'Authorization'
+    response :unauthorized
+  end
+
+  swagger_api :destroy do
+    summary 'Delete dislike'
+    param :path, :id, :integer, :required, 'Like id'
+    param :header, :Authorization, :string, :required, 'Authorization'
+    response :unauthorized
   end
   
 end

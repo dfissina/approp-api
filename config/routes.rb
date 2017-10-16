@@ -19,8 +19,8 @@ Rails.application.routes.draw do
   resources :favourites do
   end
   
-  #resources :properties do    
-  #end
+  resources :properties do
+  end
   
   post 'auth/login', to: 'authentication#authenticate'
   

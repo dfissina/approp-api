@@ -1,5 +1,7 @@
 class FavouritesController < ApplicationController
-  
+
+  swagger_controller :favourites, 'Favourites Managment'
+
   # GET /favourites
   def index
    json_response(current_user.favourites)
@@ -23,6 +25,33 @@ class FavouritesController < ApplicationController
    @favourite = Favourite.find(params[:id])
    @favourite.destroy
    head :no_content
+  end
+
+  swagger_api :index do
+    summary 'Show  all favourites'
+    param :header, :Authorization, :string, :required, 'Authorization'
+    response :unauthorized
+  end
+
+  swagger_api :show do
+    summary 'Show  favourite'
+    param :path, :id, :integer, :required, 'Favourite id'
+    param :header, :Authorization, :string, :required, 'Authorization'
+    response :unauthorized
+  end
+
+  swagger_api :create do
+    summary 'Create favourite'
+    param :form, :property_id, :integer, :required, 'Property id'
+    param :header, :Authorization, :string, :required, 'Authorization'
+    response :unauthorized
+  end
+
+  swagger_api :destroy do
+    summary 'Delete favourite'
+    param :path, :id, :integer, :required, 'Like id'
+    param :header, :Authorization, :string, :required, 'Authorization'
+    response :unauthorized
   end
   
 end
