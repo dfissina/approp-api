@@ -1,7 +1,7 @@
 {
   "apiVersion": "1.0",
   "swaggerVersion": "1.2",
-  "basePath": "http://104.236.118.65:3000",
+  "basePath": "http://localhost:3000",
   "resourcePath": "users",
   "apis": [
     {
@@ -56,6 +56,21 @@
               "type": "string",
               "description": "Constraseña",
               "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "rol",
+              "type": "string",
+              "description": "Rol",
+              "required": true,
+              "allowableValues": {
+                "valueType": "LIST",
+                "values": [
+                  "customer",
+                  "agent",
+                  "admin"
+                ]
+              }
             },
             {
               "paramType": "form",

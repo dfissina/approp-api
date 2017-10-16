@@ -8,5 +8,6 @@ FactoryGirl.define do
     phone { Faker::PhoneNumber.phone_number } 
     cell_phone { Faker::PhoneNumber.cell_phone } 
     password "123456"
+    rol %w[customer agent admin].sample    
   end
 end

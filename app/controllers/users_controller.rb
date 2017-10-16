@@ -23,6 +23,7 @@ class UsersController < ApplicationController
     param :form, :last_name, :string, :required, 'Apellido'
     param :form, :email, :email, :required, 'Email'
     param :form, :password, :string, :required, 'Constraseña'
+    param_list :form, :rol, :string, :required, 'Rol', ['customer', 'agent', 'admin']
     param :form, :birth_date, :string, :required, 'Fecha Nacimiento'
     param :form, :phone, :string, :required, 'Teléfono'
     param :form, :cell_phone, :string, :required, 'Teléfono Celular'
@@ -97,7 +98,8 @@ class UsersController < ApplicationController
       :birth_date, 
       :phone, 
       :cell_phone,
-      :password_confirmation
+      :password_confirmation,
+      :rol
     )
   end
   
