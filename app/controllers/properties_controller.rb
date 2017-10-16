@@ -46,7 +46,7 @@ class PropertiesController < ApplicationController
     param_list :form, :currency, :string, :required, 'Moneda', ['uf', 'clp']
     param :form, :street, :string, :required, 'Calle'
     param :form, :number, :integer, :required, 'Número'
-    param :form, :neighborhood, :string, :required, 'Vecindario'
+    param :form, :neighborhood, :string, :optional, 'Vecindario'
     param :form, :show_pin_map, :boolean, :required, 'Mostrar en mapa'
     param :form, :comuna_id, :string, :required, 'Comuna'
     param :form, :condominium, :boolean, :required, 'Condominio'
@@ -54,9 +54,9 @@ class PropertiesController < ApplicationController
     param_list :form, :orientation, :string, :required, 'Orientación',
                ['norte', 'sur', 'oriente', 'poniente', 'norte_sur', 'nororiente', 'norponiente', 'suroriente', 'surponiente',
                 'oriente_poniente', 'todas']
-    param :form, :parking_lots, :string, :required, 'Estacionamientos'
-    param :form, :cellar, :boolean, :required, 'Bodega'
-    param :form, :expenses, :double, :required, 'Expensas'
+    param :form, :parking_lots, :integer, :optional, 'Estacionamientos'
+    param :form, :cellar, :boolean, :optional, 'Bodega'
+    param :form, :expenses, :double, :optional, 'Expensas'
     param :form, :pets, :boolean, :required, 'Mascotas'
     param :header, :Authorization, :string, :required, 'Authorization'
   end
@@ -92,7 +92,7 @@ class PropertiesController < ApplicationController
     param_list :form, :orientation, :string, :optional, 'Orientación',
                ['norte', 'sur', 'oriente', 'poniente', 'norte_sur', 'nororiente', 'norponiente', 'suroriente', 'surponiente',
                 'oriente_poniente', 'todas']
-    param :form, :parking_lots, :string, :optional, 'Estacionamientos'
+    param :form, :parking_lots, :integer, :optional, 'Estacionamientos'
     param :form, :cellar, :boolean, :optional, 'Bodega'
     param :form, :expenses, :double, :optional, 'Expensas'
     param :form, :pets, :boolean, :optional, 'Mascotas'
