@@ -58,6 +58,8 @@ class PropertiesController < ApplicationController
     param :form, :cellar, :boolean, :optional, 'Bodega'
     param :form, :expenses, :double, :optional, 'Expensas'
     param :form, :pets, :boolean, :required, 'Mascotas'
+    param :form, :tower, :string, :optional, 'Torre'
+    param :form, :terrace, :boolean, :optional, 'Terraza'
     param :header, :Authorization, :string, :required, 'Authorization'
   end
 
@@ -96,6 +98,8 @@ class PropertiesController < ApplicationController
     param :form, :cellar, :boolean, :optional, 'Bodega'
     param :form, :expenses, :double, :optional, 'Expensas'
     param :form, :pets, :boolean, :optional, 'Mascotas'
+    param :form, :tower, :string, :optional, 'Torre'
+    param :form, :terrace, :boolean, :optional, 'Terraza'
     param :header, :Authorization, :string, :required, 'Authorization'
   end
 
@@ -154,7 +158,9 @@ class PropertiesController < ApplicationController
       :parking_lots,
       :cellar,
       :expenses,
-      :pets    
+      :pets,
+      :tower,
+      :terrace
     )
   end
 end
