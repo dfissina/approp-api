@@ -44,7 +44,7 @@ class PropertiesController < ApplicationController
   
   # GET /search
   def search
-    
+      
     @properties = Property.all
  
     if params[:currency].present?
@@ -76,11 +76,11 @@ class PropertiesController < ApplicationController
     end
     
     if params[:condominium].present? 
-      @properties = @properties.where(condominium: params[:condominium])
+      @properties = @properties.where(condominium: parse_boolean(params[:condominium]))
     end
     
     if params[:furniture].present? 
-      @properties = @properties.where(furniture: params[:furniture])
+      @properties = @properties.where(furniture: parse_boolean(params[:furniture]))
     end
     
     if params[:orientation].present? 
@@ -92,7 +92,7 @@ class PropertiesController < ApplicationController
     end
     
     if params[:pets].present? 
-      @properties = @properties.where(pets: params[:pets])
+      @properties = @properties.where(:pets => parse_boolean(params[:pets]))
     end
     
     if params[:bedrooms].present? 
@@ -222,6 +222,10 @@ class PropertiesController < ApplicationController
 
   private
 
+  def parse_boolean(value)
+    value  == "true"
+  end
+  
   def set_user
     @user = User.find(params[:user_id])
   end
