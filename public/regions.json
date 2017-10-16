@@ -1,0 +1,174 @@
+{
+  "apiVersion": "1.0",
+  "swaggerVersion": "1.2",
+  "basePath": "http://104.236.118.65:3000",
+  "resourcePath": "regions",
+  "apis": [
+    {
+      "path": "/regions",
+      "operations": [
+        {
+          "summary": "Show  all regiones",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Authorization",
+              "required": true
+            }
+          ],
+          "responseMessages": [
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "Unauthorized"
+            }
+          ],
+          "nickname": "Regions#index",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/regions",
+      "operations": [
+        {
+          "summary": "Create región",
+          "parameters": [
+            {
+              "paramType": "form",
+              "name": "name",
+              "type": "string",
+              "description": "Nombre",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "lat",
+              "type": "float",
+              "description": "Latitud",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "lng",
+              "type": "float",
+              "description": "Longitud",
+              "required": true
+            },
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Authorization",
+              "required": true
+            }
+          ],
+          "nickname": "Regions#create",
+          "method": "post"
+        }
+      ]
+    },
+    {
+      "path": "/regions/{id}",
+      "operations": [
+        {
+          "summary": "Show región",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "id",
+              "type": "integer",
+              "description": "Región id",
+              "required": true
+            },
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Authorization",
+              "required": true
+            }
+          ],
+          "nickname": "Regions#show",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/regions/{id}",
+      "operations": [
+        {
+          "summary": "Update región",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "id",
+              "type": "integer",
+              "description": "Región id",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "name",
+              "type": "string",
+              "description": "Nombre",
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "lat",
+              "type": "float",
+              "description": "Latitud",
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "lng",
+              "type": "float",
+              "description": "Longitud",
+              "required": false
+            },
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Authorization",
+              "required": true
+            }
+          ],
+          "nickname": "Regions#update",
+          "method": "patch"
+        }
+      ]
+    },
+    {
+      "path": "/regions/{id}",
+      "operations": [
+        {
+          "summary": "Delete región",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "id",
+              "type": "integer",
+              "description": "Región id",
+              "required": true
+            },
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Authorization",
+              "required": true
+            }
+          ],
+          "nickname": "Regions#destroy",
+          "method": "delete"
+        }
+      ]
+    }
+  ],
+  "authorizations": null
+}

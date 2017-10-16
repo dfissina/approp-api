@@ -1,0 +1,134 @@
+{
+  "apiVersion": "1.0",
+  "swaggerVersion": "1.2",
+  "basePath": "http://104.236.118.65:3000",
+  "resourcePath": "favourites",
+  "apis": [
+    {
+      "path": "/favourites",
+      "operations": [
+        {
+          "summary": "Show  all favourites",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Authorization",
+              "required": true
+            }
+          ],
+          "responseMessages": [
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "Unauthorized"
+            }
+          ],
+          "nickname": "Favourites#index",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/favourites",
+      "operations": [
+        {
+          "summary": "Create favourite",
+          "parameters": [
+            {
+              "paramType": "form",
+              "name": "property_id",
+              "type": "integer",
+              "description": "Property id",
+              "required": true
+            },
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Authorization",
+              "required": true
+            }
+          ],
+          "responseMessages": [
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "Unauthorized"
+            }
+          ],
+          "nickname": "Favourites#create",
+          "method": "post"
+        }
+      ]
+    },
+    {
+      "path": "/favourites/{id}",
+      "operations": [
+        {
+          "summary": "Show  favourite",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "id",
+              "type": "integer",
+              "description": "Favourite id",
+              "required": true
+            },
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Authorization",
+              "required": true
+            }
+          ],
+          "responseMessages": [
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "Unauthorized"
+            }
+          ],
+          "nickname": "Favourites#show",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/favourites/{id}",
+      "operations": [
+        {
+          "summary": "Delete favourite",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "id",
+              "type": "integer",
+              "description": "Like id",
+              "required": true
+            },
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Authorization",
+              "required": true
+            }
+          ],
+          "responseMessages": [
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "Unauthorized"
+            }
+          ],
+          "nickname": "Favourites#destroy",
+          "method": "delete"
+        }
+      ]
+    }
+  ],
+  "authorizations": null
+}

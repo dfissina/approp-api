@@ -2,101 +2,14 @@
   "apiVersion": "1.0",
   "swaggerVersion": "1.2",
   "basePath": "http://104.236.118.65:3000",
-  "resourcePath": "users",
+  "resourcePath": "comunas",
   "apis": [
     {
-      "path": "/users",
+      "path": "/comunas",
       "operations": [
         {
-          "summary": "List Users",
+          "summary": "Show  all comunas",
           "parameters": [
-            {
-              "paramType": "header",
-              "name": "Authorization",
-              "type": "string",
-              "description": "Token",
-              "required": true
-            }
-          ],
-          "nickname": "Users#index",
-          "method": "get"
-        }
-      ]
-    },
-    {
-      "path": "/users",
-      "operations": [
-        {
-          "summary": "Sign Up",
-          "parameters": [
-            {
-              "paramType": "form",
-              "name": "first_name",
-              "type": "string",
-              "description": "Nombre",
-              "required": true
-            },
-            {
-              "paramType": "form",
-              "name": "last_name",
-              "type": "string",
-              "description": "Apellido",
-              "required": true
-            },
-            {
-              "paramType": "form",
-              "name": "email",
-              "type": "email",
-              "description": "Email",
-              "required": true
-            },
-            {
-              "paramType": "form",
-              "name": "password",
-              "type": "string",
-              "description": "Constraseña",
-              "required": true
-            },
-            {
-              "paramType": "form",
-              "name": "birth_date",
-              "type": "string",
-              "description": "Fecha Nacimiento",
-              "required": true
-            },
-            {
-              "paramType": "form",
-              "name": "phone",
-              "type": "string",
-              "description": "Teléfono",
-              "required": true
-            },
-            {
-              "paramType": "form",
-              "name": "cell_phone",
-              "type": "string",
-              "description": "Teléfono Celular",
-              "required": true
-            }
-          ],
-          "nickname": "Users#create",
-          "method": "post"
-        }
-      ]
-    },
-    {
-      "path": "/users/{id}",
-      "operations": [
-        {
-          "summary": "Show user",
-          "parameters": [
-            {
-              "paramType": "path",
-              "name": "id",
-              "type": "integer",
-              "description": "Id",
-              "required": true
-            },
             {
               "paramType": "header",
               "name": "Authorization",
@@ -112,71 +25,123 @@
               "message": "Unauthorized"
             }
           ],
-          "nickname": "Users#show",
+          "nickname": "Comunas#index",
           "method": "get"
         }
       ]
     },
     {
-      "path": "/users/{id}",
+      "path": "/comunas",
       "operations": [
         {
-          "summary": "Edit user",
+          "summary": "Create comuna",
+          "parameters": [
+            {
+              "paramType": "form",
+              "name": "name",
+              "type": "string",
+              "description": "Nombre",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "lat",
+              "type": "float",
+              "description": "Latitud",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "lng",
+              "type": "float",
+              "description": "Longitud",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "region_id",
+              "type": "integer",
+              "description": "Region id",
+              "required": true
+            },
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Authorization",
+              "required": true
+            }
+          ],
+          "nickname": "Comunas#create",
+          "method": "post"
+        }
+      ]
+    },
+    {
+      "path": "/comunas/{id}",
+      "operations": [
+        {
+          "summary": "Show comuna",
           "parameters": [
             {
               "paramType": "path",
               "name": "id",
               "type": "integer",
-              "description": "Id",
+              "description": "Comuna id",
+              "required": true
+            },
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Authorization",
+              "required": true
+            }
+          ],
+          "nickname": "Comunas#show",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/comunas/{id}",
+      "operations": [
+        {
+          "summary": "Update comuna",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "id",
+              "type": "integer",
+              "description": "Comuna id",
               "required": true
             },
             {
               "paramType": "form",
-              "name": "first_name",
+              "name": "name",
               "type": "string",
               "description": "Nombre",
               "required": false
             },
             {
               "paramType": "form",
-              "name": "last_name",
-              "type": "string",
-              "description": "Apellido",
+              "name": "lat",
+              "type": "float",
+              "description": "Latitud",
               "required": false
             },
             {
               "paramType": "form",
-              "name": "email",
-              "type": "string",
-              "description": "Email",
+              "name": "lng",
+              "type": "float",
+              "description": "Longitud",
               "required": false
             },
             {
               "paramType": "form",
-              "name": "password",
-              "type": "string",
-              "description": "Password",
-              "required": false
-            },
-            {
-              "paramType": "form",
-              "name": "birth_date",
-              "type": "string",
-              "description": "Fecha Nacimiento",
-              "required": false
-            },
-            {
-              "paramType": "form",
-              "name": "phone",
-              "type": "string",
-              "description": "Teléfono",
-              "required": false
-            },
-            {
-              "paramType": "form",
-              "name": "cell_phone",
-              "type": "string",
-              "description": "Celular",
+              "name": "region_id",
+              "type": "integer",
+              "description": "Region id",
               "required": false
             },
             {
@@ -187,22 +152,22 @@
               "required": true
             }
           ],
-          "nickname": "Users#update",
+          "nickname": "Comunas#update",
           "method": "patch"
         }
       ]
     },
     {
-      "path": "/users/{id}",
+      "path": "/comunas/{id}",
       "operations": [
         {
-          "summary": "Delete user",
+          "summary": "Delete comuna",
           "parameters": [
             {
               "paramType": "path",
               "name": "id",
               "type": "integer",
-              "description": "Id",
+              "description": "Comuna id",
               "required": true
             },
             {
@@ -213,7 +178,7 @@
               "required": true
             }
           ],
-          "nickname": "Users#destroy",
+          "nickname": "Comunas#destroy",
           "method": "delete"
         }
       ]
