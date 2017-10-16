@@ -23,7 +23,73 @@ class PropertiesController < ApplicationController
   
   # GET /search
   def search
+    
     @properties = Property.all
+ 
+    if params[:currency].present?
+      @properties = @properties.where(currency: params[:currency])
+    end
+ 
+    if params[:property_type].present? 
+      @properties = @properties.where(property_type: params[:property_type])
+    end
+    
+    if params[:operation].present? 
+      @properties = @properties.where(operation: params[:operation])
+    end
+    
+    if params[:state].present? 
+      @properties = @properties.where(state: params[:state])
+    end
+    
+    if params[:comuna_id].present?
+      @properties = @properties.where(comuna_id: params[:comuna_id])
+    end
+    
+    if params[:region_id].present?
+      @properties = @properties.joins(:comuna).where("comunas.region_id == ?",  params[:region_id]) 
+    end
+    
+    if params[:price1].present? && params[:price2].present?
+      @properties = @properties.where('price between ? and ?', params[:price1], params[:price2])
+    end
+    
+    if params[:condominium].present? 
+      @properties = @properties.where(condominium: params[:condominium])
+    end
+    
+    if params[:furniture].present? 
+      @properties = @properties.where(furniture: params[:furniture])
+    end
+    
+    if params[:orientation].present? 
+      @properties = @properties.where(orientation: params[:orientation])
+    end
+    
+    if params[:street].present? 
+      @properties = @properties.where(street: params[:street])
+    end
+    
+    if params[:pets].present? 
+      @properties = @properties.where(pets: params[:pets])
+    end
+    
+    if params[:bedrooms].present? 
+      @properties = @properties.where('bedrooms <= ?', params[:bedrooms])
+    end
+    
+    if params[:bathrooms].present? 
+      @properties = @properties.where('bathrooms <= ?', params[:bathrooms])
+    end
+    
+    if params[:build_mtrs1].present? && params[:build_mtrs2].present?
+      @properties = @properties.where('build_mtrs between ? and ?', params[:build_mtrs1], params[:build_mtrs2])
+    end
+    
+    if params[:total_mtrs1].present? && params[:total_mtrs2].present?
+      @properties = @properties.where('total_mtrs between ? and ?', params[:total_mtrs1], params[:total_mtrs2])
+    end
+    
     json_response(@properties)
   end
   
