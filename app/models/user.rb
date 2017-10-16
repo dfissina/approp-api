@@ -14,15 +14,9 @@ class User < ApplicationRecord
   has_many :favourites
   has_many :favourites_properties, through: :favourites
   
-  #has_many :favorites
-  #has_many :favorited_properties, through: :favorites
-  #has_many :likes
-  #has_many :liked_properties, through: :likes
-  #has_many :dislikes
-  #has_many :disliked_properties, through: :dislikes
-
+  enum rol: [:customer, :agent, :admin]
   #validates :rol, :email, presence: true
   
   # Validations
-  validates_presence_of :first_name, :last_name, :email, :password_digest, :birth_date
+  validates_presence_of :first_name, :last_name, :email, :password_digest, :birth_date, :rol
 end

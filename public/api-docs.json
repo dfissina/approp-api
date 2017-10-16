@@ -4,8 +4,32 @@
   "basePath": "http://localhost:3000",
   "apis": [
     {
+      "path": "/properties.{format}",
+      "description": "Properties Managment"
+    },
+    {
       "path": "/users.{format}",
       "description": "Users Managment"
+    },
+    {
+      "path": "/regions.{format}",
+      "description": "Regiones Managment"
+    },
+    {
+      "path": "/comunas.{format}",
+      "description": "Comunas Managment"
+    },
+    {
+      "path": "/likes.{format}",
+      "description": "Likes Managment"
+    },
+    {
+      "path": "/dislikes.{format}",
+      "description": "Dislikes Managment"
+    },
+    {
+      "path": "/favourites.{format}",
+      "description": "Favourites Managment"
     },
     {
       "path": "/authentication.{format}",

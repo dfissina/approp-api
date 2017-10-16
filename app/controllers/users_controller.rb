@@ -97,7 +97,8 @@ class UsersController < ApplicationController
       :birth_date, 
       :phone, 
       :cell_phone,
-      :password_confirmation
+      :password_confirmation,
+      :rol
     )
   end
   

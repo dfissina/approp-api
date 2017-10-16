@@ -1,0 +1,584 @@
+{
+  "apiVersion": "1.0",
+  "swaggerVersion": "1.2",
+  "basePath": "http://localhost:3000",
+  "resourcePath": "properties",
+  "apis": [
+    {
+      "path": "/users/{user_id}/properties",
+      "operations": [
+        {
+          "summary": "Show  all properties",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "user_id",
+              "type": "integer",
+              "description": "User id",
+              "required": true
+            },
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Authorization",
+              "required": true
+            }
+          ],
+          "responseMessages": [
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "Unauthorized"
+            }
+          ],
+          "nickname": "Properties#index",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/users/{user_id}/properties",
+      "operations": [
+        {
+          "summary": "Create property",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "user_id",
+              "type": "integer",
+              "description": "User id",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "title",
+              "type": "string",
+              "description": "Título",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "description",
+              "type": "string",
+              "description": "Descripción",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "bedrooms",
+              "type": "integer",
+              "description": "Dormitorios",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "bathrooms",
+              "type": "integer",
+              "description": "Baños",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "price",
+              "type": "double",
+              "description": "Precio",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "build_mtrs",
+              "type": "integer",
+              "description": "Metros construidos",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "total_mtrs",
+              "type": "integer",
+              "description": "Total metros",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "property_type",
+              "type": "string",
+              "description": "Tipo propiedad",
+              "required": true,
+              "allowableValues": {
+                "valueType": "LIST",
+                "values": [
+                  "casa",
+                  "departamento"
+                ]
+              }
+            },
+            {
+              "paramType": "form",
+              "name": "operation",
+              "type": "string",
+              "description": "Operación",
+              "required": true,
+              "allowableValues": {
+                "valueType": "LIST",
+                "values": [
+                  "venta",
+                  "arriendo"
+                ]
+              }
+            },
+            {
+              "paramType": "form",
+              "name": "state",
+              "type": "string",
+              "description": "Estado",
+              "required": true,
+              "allowableValues": {
+                "valueType": "LIST",
+                "values": [
+                  "nueva",
+                  "usada"
+                ]
+              }
+            },
+            {
+              "paramType": "form",
+              "name": "currency",
+              "type": "string",
+              "description": "Moneda",
+              "required": true,
+              "allowableValues": {
+                "valueType": "LIST",
+                "values": [
+                  "uf",
+                  "clp"
+                ]
+              }
+            },
+            {
+              "paramType": "form",
+              "name": "street",
+              "type": "string",
+              "description": "Calle",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "number",
+              "type": "integer",
+              "description": "Número",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "neighborhood",
+              "type": "string",
+              "description": "Vecindario",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "show_pin_map",
+              "type": "boolean",
+              "description": "Mostrar en mapa",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "comuna_id",
+              "type": "string",
+              "description": "Comuna",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "condominium",
+              "type": "boolean",
+              "description": "Condominio",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "furniture",
+              "type": "boolean",
+              "description": "Amueblado",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "orientation",
+              "type": "string",
+              "description": "Orientación",
+              "required": true,
+              "allowableValues": {
+                "valueType": "LIST",
+                "values": [
+                  "norte",
+                  "sur",
+                  "oriente",
+                  "poniente",
+                  "norte_sur",
+                  "nororiente",
+                  "norponiente",
+                  "suroriente",
+                  "surponiente",
+                  "oriente_poniente",
+                  "todas"
+                ]
+              }
+            },
+            {
+              "paramType": "form",
+              "name": "parking_lots",
+              "type": "string",
+              "description": "Estacionamientos",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "cellar",
+              "type": "boolean",
+              "description": "Bodega",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "expenses",
+              "type": "double",
+              "description": "Expensas",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "pets",
+              "type": "boolean",
+              "description": "Mascotas",
+              "required": true
+            },
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Authorization",
+              "required": true
+            }
+          ],
+          "nickname": "Properties#create",
+          "method": "post"
+        }
+      ]
+    },
+    {
+      "path": "/users/{user_id}/properties/{id}",
+      "operations": [
+        {
+          "summary": "Show property",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "user_id",
+              "type": "integer",
+              "description": "User id",
+              "required": true
+            },
+            {
+              "paramType": "path",
+              "name": "id",
+              "type": "integer",
+              "description": "Property id",
+              "required": true
+            },
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Authorization",
+              "required": true
+            }
+          ],
+          "responseMessages": [
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "Unauthorized"
+            }
+          ],
+          "nickname": "Properties#show",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/users/{user_id}/properties/{id}",
+      "operations": [
+        {
+          "summary": "Create property",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "user_id",
+              "type": "integer",
+              "description": "User id",
+              "required": true
+            },
+            {
+              "paramType": "path",
+              "name": "id",
+              "type": "integer",
+              "description": "Property id",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "title",
+              "type": "string",
+              "description": "Título",
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "description",
+              "type": "string",
+              "description": "Descripción",
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "bedrooms",
+              "type": "integer",
+              "description": "Dormitorios",
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "bathrooms",
+              "type": "integer",
+              "description": "Baños",
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "price",
+              "type": "double",
+              "description": "Precio",
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "build_mtrs",
+              "type": "integer",
+              "description": "Metros construidos",
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "total_mtrs",
+              "type": "integer",
+              "description": "Total metros",
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "property_type",
+              "type": "string",
+              "description": "Tipo propiedad",
+              "required": false,
+              "allowableValues": {
+                "valueType": "LIST",
+                "values": [
+                  "casa",
+                  "departamento"
+                ]
+              }
+            },
+            {
+              "paramType": "form",
+              "name": "operation",
+              "type": "string",
+              "description": "Operación",
+              "required": false,
+              "allowableValues": {
+                "valueType": "LIST",
+                "values": [
+                  "venta",
+                  "arriendo"
+                ]
+              }
+            },
+            {
+              "paramType": "form",
+              "name": "state",
+              "type": "string",
+              "description": "Estado",
+              "required": false,
+              "allowableValues": {
+                "valueType": "LIST",
+                "values": [
+                  "nueva",
+                  "usada"
+                ]
+              }
+            },
+            {
+              "paramType": "form",
+              "name": "currency",
+              "type": "string",
+              "description": "Moneda",
+              "required": false,
+              "allowableValues": {
+                "valueType": "LIST",
+                "values": [
+                  "uf",
+                  "clp"
+                ]
+              }
+            },
+            {
+              "paramType": "form",
+              "name": "street",
+              "type": "string",
+              "description": "Calle",
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "number",
+              "type": "integer",
+              "description": "Número",
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "neighborhood",
+              "type": "string",
+              "description": "Vecindario",
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "show_pin_map",
+              "type": "boolean",
+              "description": "Mostrar en mapa",
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "comuna_id",
+              "type": "string",
+              "description": "Comuna",
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "condominium",
+              "type": "boolean",
+              "description": "Condominio",
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "furniture",
+              "type": "boolean",
+              "description": "Amueblado",
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "orientation",
+              "type": "string",
+              "description": "Orientación",
+              "required": false,
+              "allowableValues": {
+                "valueType": "LIST",
+                "values": [
+                  "norte",
+                  "sur",
+                  "oriente",
+                  "poniente",
+                  "norte_sur",
+                  "nororiente",
+                  "norponiente",
+                  "suroriente",
+                  "surponiente",
+                  "oriente_poniente",
+                  "todas"
+                ]
+              }
+            },
+            {
+              "paramType": "form",
+              "name": "parking_lots",
+              "type": "string",
+              "description": "Estacionamientos",
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "cellar",
+              "type": "boolean",
+              "description": "Bodega",
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "expenses",
+              "type": "double",
+              "description": "Expensas",
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "pets",
+              "type": "boolean",
+              "description": "Mascotas",
+              "required": false
+            },
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Authorization",
+              "required": true
+            }
+          ],
+          "nickname": "Properties#update",
+          "method": "patch"
+        }
+      ]
+    },
+    {
+      "path": "/users/{user_id}/properties/{id}",
+      "operations": [
+        {
+          "summary": "Delete property",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "user_id",
+              "type": "integer",
+              "description": "User id",
+              "required": true
+            },
+            {
+              "paramType": "path",
+              "name": "id",
+              "type": "integer",
+              "description": "Property id",
+              "required": true
+            },
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Authorization",
+              "required": true
+            }
+          ],
+          "nickname": "Properties#destroy",
+          "method": "delete"
+        }
+      ]
+    }
+  ],
+  "authorizations": null
+}

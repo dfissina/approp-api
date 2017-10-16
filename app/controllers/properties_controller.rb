@@ -1,8 +1,8 @@
 class PropertiesController < ApplicationController
 
   swagger_controller :properties, 'Properties Managment'
-
-  before_action :set_user
+  skip_before_action :authorize_request, only: :search
+  before_action :set_user, only: [:index, :show, :create, :update, :destroy]
   before_action :set_user_property, only: [:show, :update, :destroy]
 
   swagger_api :index do
@@ -16,7 +16,13 @@ class PropertiesController < ApplicationController
   def index
    json_response(@user.properties)
   end
-
+  
+  # GET /search
+  def search
+    @properties = Property.all
+    json_response(@properties)
+  end
+  
   swagger_api :show do
     summary 'Show property'
     param :path, :user_id, :integer, :required, 'User id'
