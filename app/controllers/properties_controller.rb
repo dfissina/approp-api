@@ -19,6 +19,27 @@ class PropertiesController < ApplicationController
 
   swagger_api :search do
     summary 'Public search properties'
+    param :query, :bedrooms, :integer, :optional, 'Dormitorios'
+    param :query, :bathrooms, :integer, :optional, 'Baños'
+    param :query, :price1, :double, :optional, 'Precio 1'
+    param :query, :price2, :double, :optional, 'Precio 2'
+    param :query, :build_mtrs1, :integer, :optional, 'Metros construidos 1'
+    param :query, :build_mtrs2, :integer, :optional, 'Metros construidos 2'
+    param :query, :total_mtrs1, :integer, :optional, 'Total metros 1'
+    param :query, :total_mtrs2, :integer, :optional, 'Total metros 2'
+    param_list :query, :property_type, :string, :optional, 'Tipo propiedad', ['casa', 'departamento']
+    param_list :query, :operation, :string, :optional, 'Operación', ['venta', 'arriendo']
+    param_list :query, :state, :string, :optional, 'Estado', ['nueva', 'usada']
+    param_list :query, :currency, :string, :optional, 'Moneda', ['uf', 'clp']
+    param :query, :street, :string, :optional, 'Calle'
+    param :query, :comuna_id, :string, :optional, 'Comuna id'
+    param :query, :region_id, :string, :optional, 'Región id'
+    param :query, :condominium, :boolean, :optional, 'Condominio'
+    param :query, :furniture, :boolean, :optional, 'Amueblado'
+    param_list :query, :orientation, :string, :optional, 'Orientación',
+               ['norte', 'sur', 'oriente', 'poniente', 'norte_sur', 'nororiente', 'norponiente', 'suroriente', 'surponiente',
+                'oriente_poniente', 'todas']
+    param :query, :pets, :boolean, :optional, 'Mascotas'
   end
   
   # GET /search
