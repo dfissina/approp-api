@@ -3,6 +3,12 @@ class Property < ApplicationRecord
   
   belongs_to :comuna
   
+  has_many :likes
+  
+  has_many :dislikes
+  
+  has_many :favourites
+  
   enum property_type: [:casa, :departamento]
   
   enum operation: [:venta, :arriendo]

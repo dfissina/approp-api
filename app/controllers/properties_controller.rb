@@ -125,11 +125,10 @@ class PropertiesController < ApplicationController
       @properties = @properties.paginate(:page => 1, :per_page => 5)
     end
 
-    # json_response(@properties)
-
-    # render json: @properties, serializer_params: {show_total_size: true, total_size: @properties.total_entries}
-
-    render :json => {:properties => @properties, :total_size => @properties.total_entries}
+    render json: {
+        properties: ActiveModel::Serializer::CollectionSerializer.new(@properties, serializer: PropertyResultSearchSerializer),
+        total_size: @properties.size,
+    }
 
   end
 
@@ -163,6 +162,7 @@ class PropertiesController < ApplicationController
     param_list :form, :currency, :string, :required, 'Moneda', ['uf', 'clp']
     param :form, :street, :string, :required, 'Calle'
     param :form, :number, :integer, :required, 'Número'
+    param :form, :departament, :integer, :optional, 'Número departamento'
     param :form, :neighborhood, :string, :optional, 'Vecindario'
     param :form, :show_pin_map, :boolean, :required, 'Mostrar en mapa'
     param :form, :comuna_id, :string, :required, 'Comuna'
@@ -205,6 +205,7 @@ class PropertiesController < ApplicationController
     param_list :form, :currency, :string, :optional, 'Moneda', ['uf', 'clp']
     param :form, :street, :string, :optional, 'Calle'
     param :form, :number, :integer, :optional, 'Número'
+    param :form, :departament, :integer, :optional, 'Número departamento'
     param :form, :neighborhood, :string, :optional, 'Vecindario'
     param :form, :show_pin_map, :boolean, :optional, 'Mostrar en mapa'
     param :form, :comuna_id, :string, :optional, 'Comuna'
@@ -289,7 +290,8 @@ class PropertiesController < ApplicationController
       :lat,
       :lng,
       :page,
-      :keyword
+      :keyword,
+      :departament
     )
   end
 end
