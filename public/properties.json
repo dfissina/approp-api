@@ -97,7 +97,7 @@
               "name": "total_mtrs",
               "type": "integer",
               "description": "Total metros",
-              "required": true
+              "required": false
             },
             {
               "paramType": "form",
@@ -270,6 +270,20 @@
               "required": false
             },
             {
+              "paramType": "form",
+              "name": "lat",
+              "type": "double",
+              "description": "Latitud",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "lng",
+              "type": "double",
+              "description": "Longitud",
+              "required": true
+            },
+            {
               "paramType": "header",
               "name": "Authorization",
               "type": "string",
@@ -326,7 +340,7 @@
       "path": "/users/{user_id}/properties/{id}",
       "operations": [
         {
-          "summary": "Create property",
+          "summary": "Update property",
           "parameters": [
             {
               "paramType": "path",
@@ -562,6 +576,20 @@
               "required": false
             },
             {
+              "paramType": "form",
+              "name": "lat",
+              "type": "double",
+              "description": "Latitud",
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "lng",
+              "type": "double",
+              "description": "Longitud",
+              "required": false
+            },
+            {
               "paramType": "header",
               "name": "Authorization",
               "type": "string",
@@ -613,6 +641,13 @@
         {
           "summary": "Public search properties",
           "parameters": [
+            {
+              "paramType": "query",
+              "name": "keyword",
+              "type": "string",
+              "description": "Palabra Clave",
+              "required": false
+            },
             {
               "paramType": "query",
               "name": "bedrooms",
@@ -782,6 +817,27 @@
                   "todas"
                 ]
               }
+            },
+            {
+              "paramType": "query",
+              "name": "lat",
+              "type": "double",
+              "description": "Latitud",
+              "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "lng",
+              "type": "double",
+              "description": "Longitud",
+              "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "page",
+              "type": "integer",
+              "description": "Página",
+              "required": false
             },
             {
               "paramType": "query",

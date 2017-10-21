@@ -19,6 +19,7 @@ class PropertiesController < ApplicationController
 
   swagger_api :search do
     summary 'Public search properties'
+    param :query, :keyword, :string, :optional, 'Palabra Clave'
     param :query, :bedrooms, :integer, :optional, 'Dormitorios'
     param :query, :bathrooms, :integer, :optional, 'Baños'
     param :query, :price1, :double, :optional, 'Precio 1'
@@ -39,6 +40,9 @@ class PropertiesController < ApplicationController
     param_list :query, :orientation, :string, :optional, 'Orientación',
                ['norte', 'sur', 'oriente', 'poniente', 'norte_sur', 'nororiente', 'norponiente', 'suroriente', 'surponiente',
                 'oriente_poniente', 'todas']
+    param :query, :lat, :double, :optional, 'Latitud'
+    param :query, :lng, :double, :optional, 'Longitud'
+    param :query, :page, :integer, :optional, 'Página'
     param :query, :pets, :boolean, :optional, 'Mascotas'
   end
   
@@ -46,6 +50,10 @@ class PropertiesController < ApplicationController
   def search
       
     @properties = Property.all
+
+    if params[:keyword].present?
+      @properties = @properties.where("description LIKE ?", "%#{params[:keyword]}%")
+    end
  
     if params[:currency].present?
       @properties = @properties.where(currency: params[:currency])
@@ -96,11 +104,11 @@ class PropertiesController < ApplicationController
     end
     
     if params[:bedrooms].present? 
-      @properties = @properties.where('bedrooms <= ?', params[:bedrooms])
+      @properties = @properties.where('bedrooms = ?', params[:bedrooms])
     end
     
     if params[:bathrooms].present? 
-      @properties = @properties.where('bathrooms <= ?', params[:bathrooms])
+      @properties = @properties.where('bathrooms = ?', params[:bathrooms])
     end
     
     if params[:build_mtrs1].present? && params[:build_mtrs2].present?
@@ -110,10 +118,21 @@ class PropertiesController < ApplicationController
     if params[:total_mtrs1].present? && params[:total_mtrs2].present?
       @properties = @properties.where('total_mtrs between ? and ?', params[:total_mtrs1], params[:total_mtrs2])
     end
-    
-    json_response(@properties)
+
+    if params[:page].present?
+      @properties = @properties.paginate(:page => params[:page], :per_page => 5)
+    else
+      @properties = @properties.paginate(:page => 1, :per_page => 5)
+    end
+
+    # json_response(@properties)
+
+    # render json: @properties, serializer_params: {show_total_size: true, total_size: @properties.total_entries}
+
+    render :json => {:properties => @properties, :total_size => @properties.total_entries}
+
   end
-  
+
   swagger_api :show do
     summary 'Show property'
     param :path, :user_id, :integer, :required, 'User id'
@@ -127,6 +146,7 @@ class PropertiesController < ApplicationController
    json_response(@property)
   end
 
+
   swagger_api :create do
     summary 'Create property'
     param :path, :user_id, :integer, :required, 'User id'
@@ -136,7 +156,7 @@ class PropertiesController < ApplicationController
     param :form, :bathrooms, :integer, :required, 'Baños'
     param :form, :price, :double, :required, 'Precio'
     param :form, :build_mtrs, :integer, :required, 'Metros construidos'
-    param :form, :total_mtrs, :integer, :required, 'Total metros'
+    param :form, :total_mtrs, :integer, :optional, 'Total metros'
     param_list :form, :property_type, :string, :required, 'Tipo propiedad', ['casa', 'departamento']
     param_list :form, :operation, :string, :required, 'Operación', ['venta', 'arriendo']
     param_list :form, :state, :string, :required, 'Estado', ['nueva', 'usada']
@@ -157,6 +177,8 @@ class PropertiesController < ApplicationController
     param :form, :pets, :boolean, :required, 'Mascotas'
     param :form, :tower, :string, :optional, 'Torre'
     param :form, :terrace, :boolean, :optional, 'Terraza'
+    param :form, :lat, :double, :required, 'Latitud'
+    param :form, :lng, :double, :required, 'Longitud'
     param :header, :Authorization, :string, :required, 'Authorization'
   end
 
@@ -167,7 +189,7 @@ class PropertiesController < ApplicationController
   end
 
   swagger_api :update do
-    summary 'Create property'
+    summary 'Update property'
     param :path, :user_id, :integer, :required, 'User id'
     param :path, :id, :integer, :required, 'Property id'
     param :form, :title, :string, :optional, 'Título'
@@ -197,6 +219,8 @@ class PropertiesController < ApplicationController
     param :form, :pets, :boolean, :optional, 'Mascotas'
     param :form, :tower, :string, :optional, 'Torre'
     param :form, :terrace, :boolean, :optional, 'Terraza'
+    param :form, :lat, :double, :optional, 'Latitud'
+    param :form, :lng, :double, :optional, 'Longitud'
     param :header, :Authorization, :string, :required, 'Authorization'
   end
 
@@ -261,7 +285,11 @@ class PropertiesController < ApplicationController
       :expenses,
       :pets,
       :tower,
-      :terrace
+      :terrace,
+      :lat,
+      :lng,
+      :page,
+      :keyword
     )
   end
 end

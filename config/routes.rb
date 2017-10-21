@@ -26,7 +26,9 @@ Rails.application.routes.draw do
   
   post 'signup', to: 'users#create'
   
-  get '/search' , to: 'properties#search'
+  get '/search', to: 'properties#search'
+
+  # get '/search/:id', to: 'properties#show'
   
   
 end
