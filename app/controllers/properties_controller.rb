@@ -1,7 +1,7 @@
 class PropertiesController < ApplicationController
 
   swagger_controller :properties, 'Properties Managment'
-  skip_before_action :authorize_request, only: :search
+  skip_before_action :authorize_request, only: [:search, :show]
   before_action :set_user, only: [:index, :show, :create, :update, :destroy]
   before_action :set_user_property, only: [:show, :update, :destroy]
 
@@ -142,7 +142,7 @@ class PropertiesController < ApplicationController
  
   # GET /user/:user_id/properties/:id
   def show
-   json_response(@property)
+    render json: @property, serializer: PropertyResultSearchSerializer
   end
 
 
@@ -252,11 +252,14 @@ class PropertiesController < ApplicationController
   end
   
   def set_user
-    @user = User.find(params[:user_id])
+    if params[:user_id].present?
+      @user = User.find(params[:user_id])
+    end    
   end
     
   def set_user_property    
     @property = @user.properties.find_by!(id: params[:id]) if @user
+    @property = Property.find(params[:id]) 
   end
   
   def property_params

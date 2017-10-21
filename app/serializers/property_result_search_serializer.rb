@@ -1,4 +1,5 @@
 class PropertyResultSearchSerializer < ActiveModel::Serializer
+  # Excluir de la respuesta de propiedad: user_id, created_at, updated_at, comuna_id
   attributes(*Property.attribute_names.map(&:to_sym))
   attributes :likes
   belongs_to :comuna
@@ -26,7 +27,4 @@ class PropertyResultSearchSerializer < ActiveModel::Serializer
   def favourites
     object.favourites.size
   end
-
-
-
 end

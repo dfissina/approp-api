@@ -28,7 +28,7 @@ Rails.application.routes.draw do
   
   get '/search', to: 'properties#search'
 
-  # get '/search/:id', to: 'properties#show'
+  get '/properties/:id', to: 'properties#show'
   
   
 end
