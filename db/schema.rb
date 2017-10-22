@@ -12,52 +12,52 @@
 
 ActiveRecord::Schema.define(version: 20171019005549) do
 
-  create_table "comunas", force: :cascade do |t|
+  create_table "comunas", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci" do |t|
     t.string "name"
-    t.float "lat"
-    t.float "lng"
-    t.integer "region_id"
+    t.float "lat", limit: 24
+    t.float "lng", limit: 24
+    t.bigint "region_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["region_id"], name: "index_comunas_on_region_id"
   end
 
-  create_table "dislikes", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "property_id"
+  create_table "dislikes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci" do |t|
+    t.bigint "user_id"
+    t.bigint "property_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["property_id"], name: "index_dislikes_on_property_id"
     t.index ["user_id"], name: "index_dislikes_on_user_id"
   end
 
-  create_table "favourites", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "property_id"
+  create_table "favourites", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci" do |t|
+    t.bigint "user_id"
+    t.bigint "property_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["property_id"], name: "index_favourites_on_property_id"
     t.index ["user_id"], name: "index_favourites_on_user_id"
   end
 
-  create_table "likes", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "property_id"
+  create_table "likes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci" do |t|
+    t.bigint "user_id"
+    t.bigint "property_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["property_id"], name: "index_likes_on_property_id"
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
-  create_table "properties", force: :cascade do |t|
+  create_table "properties", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci" do |t|
     t.string "title"
     t.text "description"
     t.integer "bedrooms"
     t.integer "bathrooms"
-    t.decimal "price"
+    t.decimal "price", precision: 10
     t.integer "build_mtrs"
     t.integer "total_mtrs"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "property_type"
@@ -70,30 +70,30 @@ ActiveRecord::Schema.define(version: 20171019005549) do
     t.string "tower"
     t.string "neighborhood"
     t.boolean "show_pin_map"
-    t.integer "comuna_id"
+    t.bigint "comuna_id"
     t.boolean "condominium"
     t.boolean "furniture"
     t.integer "orientation"
     t.integer "parking_lots"
     t.integer "cellar"
-    t.decimal "expenses"
+    t.decimal "expenses", precision: 10
     t.boolean "pets"
     t.boolean "terrace"
-    t.float "lat"
-    t.float "lng"
+    t.float "lat", limit: 24
+    t.float "lng", limit: 24
     t.index ["comuna_id"], name: "index_properties_on_comuna_id"
     t.index ["user_id"], name: "index_properties_on_user_id"
   end
 
-  create_table "regions", force: :cascade do |t|
+  create_table "regions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci" do |t|
     t.string "name"
-    t.float "lat"
-    t.float "lng"
+    t.float "lat", limit: 24
+    t.float "lng", limit: 24
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci" do |t|
     t.string "first_name"
     t.string "last_name"
     t.string "email"
@@ -107,4 +107,13 @@ ActiveRecord::Schema.define(version: 20171019005549) do
     t.integer "rol"
   end
 
+  add_foreign_key "comunas", "regions"
+  add_foreign_key "dislikes", "properties"
+  add_foreign_key "dislikes", "users"
+  add_foreign_key "favourites", "properties"
+  add_foreign_key "favourites", "users"
+  add_foreign_key "likes", "properties"
+  add_foreign_key "likes", "users"
+  add_foreign_key "properties", "comunas"
+  add_foreign_key "properties", "users"
 end
