@@ -1,13 +1,21 @@
-version: "2"
-
-volumes:
-  db-data:
-    external: false
-
+version: '2'
 services:
-  app:
+  approp-db:
+    image: mysql:5.7.18
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: approp
+    ports:
+      - "3307:3306"
+
+  approp:
+    container_name: approp
     build: .
     env_file: .env
+    depends_on:
+      - approp-db
+    links:
+      - approp-db
     environment:
       RAILS_ENV: development
     ports:

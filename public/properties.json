@@ -171,6 +171,13 @@
             },
             {
               "paramType": "form",
+              "name": "departament",
+              "type": "integer",
+              "description": "Número departamento",
+              "required": false
+            },
+            {
+              "paramType": "form",
               "name": "neighborhood",
               "type": "string",
               "description": "Vecindario",
@@ -473,6 +480,13 @@
               "name": "number",
               "type": "integer",
               "description": "Número",
+              "required": false
+            },
+            {
+              "paramType": "form",
+              "name": "departament",
+              "type": "integer",
+              "description": "Número departamento",
               "required": false
             },
             {

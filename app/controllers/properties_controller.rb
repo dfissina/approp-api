@@ -119,15 +119,19 @@ class PropertiesController < ApplicationController
       @properties = @properties.where('total_mtrs between ? and ?', params[:total_mtrs1], params[:total_mtrs2])
     end
 
+
+    properties_size = @properties.size
+
     if params[:page].present?
-      @properties = @properties.paginate(:page => params[:page], :per_page => 5)
+      @properties = @properties.paginate(:page => params[:page], :per_page => 2)
     else
-      @properties = @properties.paginate(:page => 1, :per_page => 5)
+      @properties = @properties.paginate(:page => 1, :per_page => 2)
     end
 
     render json: {
-        properties: ActiveModel::Serializer::CollectionSerializer.new(@properties, serializer: PropertyResultSearchSerializer),
-        total_size: @properties.size,
+      properties: ActiveModel::Serializer::CollectionSerializer.new(@properties, serializer: PropertyResultSearchSerializer),
+      total_size: properties_size,
+      total_pages: @properties.total_pages
     }
 
   end
