@@ -848,9 +848,23 @@
             },
             {
               "paramType": "query",
+              "name": "radius",
+              "type": "integer",
+              "description": "Radio de búsqueda (mts)",
+              "required": false
+            },
+            {
+              "paramType": "query",
               "name": "page",
               "type": "integer",
               "description": "Página",
+              "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "resultsperpage",
+              "type": "integer",
+              "description": "Resultados por página",
               "required": false
             },
             {
@@ -862,6 +876,25 @@
             }
           ],
           "nickname": "Properties#search",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/properties/{id}",
+      "operations": [
+        {
+          "summary": "Detail property",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "id",
+              "type": "integer",
+              "description": "Property id",
+              "required": true
+            }
+          ],
+          "nickname": "Properties#detail",
           "method": "get"
         }
       ]

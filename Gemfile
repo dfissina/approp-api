@@ -29,6 +29,9 @@ gem 'jwt'
 # Swagger
 gem 'swagger-docs', '~> 0.2.8'
 
+# Geokit
+gem 'geokit-rails'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

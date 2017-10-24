@@ -1,7 +1,7 @@
 class PropertiesController < ApplicationController
 
   swagger_controller :properties, 'Properties Managment'
-  skip_before_action :authorize_request, only: [:search, :show]
+  skip_before_action :authorize_request, only: [:search, :detail, :show]
   before_action :set_user, only: [:index, :show, :create, :update, :destroy]
   before_action :set_user_property, only: [:show, :update, :destroy]
 
@@ -42,7 +42,9 @@ class PropertiesController < ApplicationController
                 'oriente_poniente', 'todas']
     param :query, :lat, :double, :optional, 'Latitud'
     param :query, :lng, :double, :optional, 'Longitud'
+    param :query, :radius, :integer, :optional, 'Radio de búsqueda (mts)'
     param :query, :page, :integer, :optional, 'Página'
+    param :query, :resultsperpage, :integer, :optional, 'Resultados por página'
     param :query, :pets, :boolean, :optional, 'Mascotas'
   end
   
@@ -119,13 +121,26 @@ class PropertiesController < ApplicationController
       @properties = @properties.where('total_mtrs between ? and ?', params[:total_mtrs1], params[:total_mtrs2])
     end
 
+    if params[:lat].present? && params[:lng].present?
+      if params[:radius].present?
+        @properties = @properties.within(params[:radius], :origin => [params[:lat], params[:lng]]).order('lat, lng desc')
+      else
+        @properties = @properties.within(500, :origin => [params[:lat], params[:lng]])
+      end
+    end
+
 
     properties_size = @properties.size
+    if params[:resultsperpage].present?
+      result_per_page = params[:resultsperpage]
+    else
+      result_per_page = 2
+    end
 
     if params[:page].present?
-      @properties = @properties.paginate(:page => params[:page], :per_page => 2)
+      @properties = @properties.paginate(:page => params[:page], :per_page => result_per_page)
     else
-      @properties = @properties.paginate(:page => 1, :per_page => 2)
+      @properties = @properties.paginate(:page => 1, :per_page => result_per_page)
     end
 
     render json: {
@@ -143,9 +158,20 @@ class PropertiesController < ApplicationController
     param :header, :Authorization, :string, :required, 'Authorization'
     response :unauthorized
   end
- 
+
   # GET /user/:user_id/properties/:id
   def show
+    render json: @property, serializer: PropertyResultSearchSerializer
+  end
+
+  swagger_api :detail do
+    summary 'Detail property'
+    param :path, :id, :integer, :required, 'Property id'
+  end
+
+  # GET /properties/:id
+  def detail
+    @property = Property.find(params[:id])
     render json: @property, serializer: PropertyResultSearchSerializer
   end
 
@@ -298,7 +324,9 @@ class PropertiesController < ApplicationController
       :lng,
       :page,
       :keyword,
-      :departament
+      :departament,
+      :resultsperpage,
+      :radius
     )
   end
 end
