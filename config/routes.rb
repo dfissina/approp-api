@@ -28,7 +28,4 @@ Rails.application.routes.draw do
   
   get '/search', to: 'properties#search'
 
-  get '/properties/:id', to: 'properties#detail'
-  
-  
 end

@@ -657,6 +657,13 @@
           "parameters": [
             {
               "paramType": "query",
+              "name": "id",
+              "type": "integer",
+              "description": "Propiedad id",
+              "required": false
+            },
+            {
+              "paramType": "query",
               "name": "keyword",
               "type": "string",
               "description": "Palabra Clave",
@@ -876,25 +883,6 @@
             }
           ],
           "nickname": "Properties#search",
-          "method": "get"
-        }
-      ]
-    },
-    {
-      "path": "/properties/{id}",
-      "operations": [
-        {
-          "summary": "Detail property",
-          "parameters": [
-            {
-              "paramType": "path",
-              "name": "id",
-              "type": "integer",
-              "description": "Property id",
-              "required": true
-            }
-          ],
-          "nickname": "Properties#detail",
           "method": "get"
         }
       ]

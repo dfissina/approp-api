@@ -1,7 +1,7 @@
 class PropertiesController < ApplicationController
 
   swagger_controller :properties, 'Properties Managment'
-  skip_before_action :authorize_request, only: [:search, :detail, :show]
+  skip_before_action :authorize_request, only: :search
   before_action :set_user, only: [:index, :show, :create, :update, :destroy]
   before_action :set_user_property, only: [:show, :update, :destroy]
 
@@ -19,6 +19,7 @@ class PropertiesController < ApplicationController
 
   swagger_api :search do
     summary 'Public search properties'
+    param :query, :id, :integer, :optional, 'Propiedad id'
     param :query, :keyword, :string, :optional, 'Palabra Clave'
     param :query, :bedrooms, :integer, :optional, 'Dormitorios'
     param :query, :bathrooms, :integer, :optional, 'Baños'
@@ -53,8 +54,13 @@ class PropertiesController < ApplicationController
       
     @properties = Property.all
 
+    if params[:id].present?
+      @properties = @properties.where(id: params[:id])
+    end
+
     if params[:keyword].present?
-      @properties = @properties.where("description LIKE ?", "%#{params[:keyword]}%")
+      keywords = params[:keyword].split(',')
+      @properties = @properties.where((['description LIKE ?'] * keywords.size).join(' OR '), *keywords.map{ |key| "%#{key}%" })
     end
  
     if params[:currency].present?
@@ -163,18 +169,6 @@ class PropertiesController < ApplicationController
   def show
     render json: @property, serializer: PropertyResultSearchSerializer
   end
-
-  swagger_api :detail do
-    summary 'Detail property'
-    param :path, :id, :integer, :required, 'Property id'
-  end
-
-  # GET /properties/:id
-  def detail
-    @property = Property.find(params[:id])
-    render json: @property, serializer: PropertyResultSearchSerializer
-  end
-
 
   swagger_api :create do
     summary 'Create property'
