@@ -52,6 +52,13 @@
             },
             {
               "paramType": "form",
+              "name": "cod",
+              "type": "string",
+              "description": "Código de la propiedad",
+              "required": true
+            },
+            {
+              "paramType": "form",
               "name": "title",
               "type": "string",
               "description": "Título",
@@ -365,6 +372,13 @@
             },
             {
               "paramType": "form",
+              "name": "cod",
+              "type": "string",
+              "description": "Código de la propiedad",
+              "required": false
+            },
+            {
+              "paramType": "form",
               "name": "title",
               "type": "string",
               "description": "Título",
@@ -660,6 +674,13 @@
               "name": "id",
               "type": "integer",
               "description": "Propiedad id",
+              "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "cod",
+              "type": "string",
+              "description": "Código de la propiedad",
               "required": false
             },
             {

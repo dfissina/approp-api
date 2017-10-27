@@ -20,6 +20,7 @@ class PropertiesController < ApplicationController
   swagger_api :search do
     summary 'Public search properties'
     param :query, :id, :integer, :optional, 'Propiedad id'
+    param :query, :cod, :string, :optional, 'Código de la propiedad'
     param :query, :keyword, :string, :optional, 'Palabra Clave'
     param :query, :bedrooms, :integer, :optional, 'Dormitorios'
     param :query, :bathrooms, :integer, :optional, 'Baños'
@@ -56,6 +57,10 @@ class PropertiesController < ApplicationController
 
     if params[:id].present?
       @properties = @properties.where(id: params[:id])
+    end
+    
+    if params[:cod].present?
+      @properties = @properties.where(cod: params[:cod])
     end
 
     if params[:keyword].present?
@@ -173,6 +178,7 @@ class PropertiesController < ApplicationController
   swagger_api :create do
     summary 'Create property'
     param :path, :user_id, :integer, :required, 'User id'
+    param :form, :cod, :string, :required, 'Código de la propiedad'
     param :form, :title, :string, :required, 'Título'
     param :form, :description, :string, :required, 'Descripción'
     param :form, :bedrooms, :integer, :required, 'Dormitorios'
@@ -216,6 +222,7 @@ class PropertiesController < ApplicationController
     summary 'Update property'
     param :path, :user_id, :integer, :required, 'User id'
     param :path, :id, :integer, :required, 'Property id'
+    param :form, :cod, :string, :optional , 'Código de la propiedad'
     param :form, :title, :string, :optional, 'Título'
     param :form, :description, :string, :optional, 'Descripción'
     param :form, :bedrooms, :integer, :optional, 'Dormitorios'
@@ -320,7 +327,8 @@ class PropertiesController < ApplicationController
       :keyword,
       :departament,
       :resultsperpage,
-      :radius
+      :radius,
+      :cod
     )
   end
 end
