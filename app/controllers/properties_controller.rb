@@ -1,7 +1,7 @@
 class PropertiesController < ApplicationController
 
   swagger_controller :properties, 'Properties Managment'
-  skip_before_action :authorize_request, only: :search
+  skip_before_action :authorize_request, only: [:search, :show]
   before_action :set_user, only: [:index, :show, :create, :update, :destroy]
   before_action :set_user_property, only: [:show, :update, :destroy]
 
@@ -131,7 +131,7 @@ class PropertiesController < ApplicationController
       if params[:radius].present?
         @properties = @properties.within(params[:radius], :origin => [params[:lat], params[:lng]]).order('lat, lng desc')
       else
-        @properties = @properties.within(500, :origin => [params[:lat], params[:lng]])
+        @properties = @properties.within(500, :origin => [params[:lat], params[:lng]]).order('lat, lng desc')
       end
     end
 
