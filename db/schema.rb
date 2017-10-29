@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171027191350) do
+ActiveRecord::Schema.define(version: 20171029180804) do
 
   create_table "comunas", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci" do |t|
     t.string "name"
@@ -86,6 +86,15 @@ ActiveRecord::Schema.define(version: 20171027191350) do
     t.index ["user_id"], name: "index_properties_on_user_id"
   end
 
+  create_table "property_photos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci" do |t|
+    t.text "photo"
+    t.integer "order"
+    t.bigint "property_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["property_id"], name: "index_property_photos_on_property_id"
+  end
+
   create_table "regions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci" do |t|
     t.string "name"
     t.float "lat", limit: 24
@@ -117,4 +126,5 @@ ActiveRecord::Schema.define(version: 20171027191350) do
   add_foreign_key "likes", "users"
   add_foreign_key "properties", "comunas"
   add_foreign_key "properties", "users"
+  add_foreign_key "property_photos", "properties"
 end

@@ -145,7 +145,7 @@ class PropertiesController < ApplicationController
     if params[:resultsperpage].present?
       result_per_page = params[:resultsperpage]
     else
-      result_per_page = 2
+      result_per_page = 20
     end
 
     if params[:page].present?

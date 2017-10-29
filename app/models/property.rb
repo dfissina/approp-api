@@ -13,6 +13,8 @@ class Property < ApplicationRecord
   
   has_many :favourites
   
+  has_many :property_photos, dependent: :destroy
+  
   enum property_type: [:casa, :departamento]
   
   enum operation: [:venta, :arriendo]
@@ -25,5 +27,5 @@ class Property < ApplicationRecord
      
   validates_presence_of :title, :description, :bedrooms, :bathrooms, :price, :build_mtrs,
                         :property_type, :operation, :state, :currency, :street, :number, :show_pin_map,
-                        :condominium, :furniture, :orientation, :pets, :lat, :lng
+                        :orientation, :lat, :lng
 end
