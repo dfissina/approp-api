@@ -10,9 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20171029180804) do
+=======
+ActiveRecord::Schema.define(version: 20171028155643) do
+>>>>>>> 6ae3d567ddad6ba91c76e2de10a252b3a7dc1d71
 
-  create_table "comunas", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci" do |t|
+  create_table "comunas", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "name"
     t.float "lat", limit: 24
     t.float "lng", limit: 24
@@ -22,7 +26,7 @@ ActiveRecord::Schema.define(version: 20171029180804) do
     t.index ["region_id"], name: "index_comunas_on_region_id"
   end
 
-  create_table "dislikes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci" do |t|
+  create_table "dislikes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.bigint "user_id"
     t.bigint "property_id"
     t.datetime "created_at", null: false
@@ -31,7 +35,7 @@ ActiveRecord::Schema.define(version: 20171029180804) do
     t.index ["user_id"], name: "index_dislikes_on_user_id"
   end
 
-  create_table "favourites", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci" do |t|
+  create_table "favourites", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.bigint "user_id"
     t.bigint "property_id"
     t.datetime "created_at", null: false
@@ -40,7 +44,7 @@ ActiveRecord::Schema.define(version: 20171029180804) do
     t.index ["user_id"], name: "index_favourites_on_user_id"
   end
 
-  create_table "likes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci" do |t|
+  create_table "likes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.bigint "user_id"
     t.bigint "property_id"
     t.datetime "created_at", null: false
@@ -49,7 +53,7 @@ ActiveRecord::Schema.define(version: 20171029180804) do
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
-  create_table "properties", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci" do |t|
+  create_table "properties", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "title"
     t.text "description"
     t.integer "bedrooms"
@@ -86,6 +90,7 @@ ActiveRecord::Schema.define(version: 20171029180804) do
     t.index ["user_id"], name: "index_properties_on_user_id"
   end
 
+<<<<<<< HEAD
   create_table "property_photos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci" do |t|
     t.text "photo"
     t.integer "order"
@@ -96,6 +101,9 @@ ActiveRecord::Schema.define(version: 20171029180804) do
   end
 
   create_table "regions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci" do |t|
+=======
+  create_table "regions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+>>>>>>> 6ae3d567ddad6ba91c76e2de10a252b3a7dc1d71
     t.string "name"
     t.float "lat", limit: 24
     t.float "lng", limit: 24
@@ -103,7 +111,7 @@ ActiveRecord::Schema.define(version: 20171029180804) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci" do |t|
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "first_name"
     t.string "last_name"
     t.string "email"
@@ -115,6 +123,7 @@ ActiveRecord::Schema.define(version: 20171029180804) do
     t.datetime "updated_at", null: false
     t.string "profile_picture"
     t.integer "rol"
+    t.boolean "password_reseted"
   end
 
   add_foreign_key "comunas", "regions"

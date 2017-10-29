@@ -19,4 +19,16 @@ class User < ApplicationRecord
   
   # Validations
   validates_presence_of :first_name, :last_name, :email, :password_digest, :birth_date, :rol
+
+  def generate_password_token!
+    self.password = generate_password
+    self.password_reseted = true
+    save!
+  end
+
+  private
+
+  def generate_password
+    SecureRandom.hex(10)
+  end
 end

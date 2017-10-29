@@ -72,15 +72,15 @@ class PropertiesController < ApplicationController
       @properties = @properties.where(currency: params[:currency])
     end
  
-    if params[:property_type].present? 
+    if params[:property_type].present?
       @properties = @properties.where(property_type: params[:property_type])
     end
     
-    if params[:operation].present? 
+    if params[:operation].present?
       @properties = @properties.where(operation: params[:operation])
     end
     
-    if params[:state].present? 
+    if params[:state].present?
       @properties = @properties.where(state: params[:state])
     end
     
@@ -89,38 +89,38 @@ class PropertiesController < ApplicationController
     end
     
     if params[:region_id].present?
-      @properties = @properties.joins(:comuna).where("comunas.region_id == ?",  params[:region_id]) 
+      @properties = @properties.joins(:comuna).where("comunas.region_id == ?",  params[:region_id])
     end
     
     if params[:price1].present? && params[:price2].present?
       @properties = @properties.where('price between ? and ?', params[:price1], params[:price2])
     end
     
-    if params[:condominium].present? 
+    if params[:condominium].present?
       @properties = @properties.where(condominium: parse_boolean(params[:condominium]))
     end
     
-    if params[:furniture].present? 
+    if params[:furniture].present?
       @properties = @properties.where(furniture: parse_boolean(params[:furniture]))
     end
     
-    if params[:orientation].present? 
+    if params[:orientation].present?
       @properties = @properties.where(orientation: params[:orientation])
     end
     
-    if params[:street].present? 
+    if params[:street].present?
       @properties = @properties.where(street: params[:street])
     end
     
-    if params[:pets].present? 
+    if params[:pets].present?
       @properties = @properties.where(:pets => parse_boolean(params[:pets]))
     end
     
-    if params[:bedrooms].present? 
+    if params[:bedrooms].present?
       @properties = @properties.where('bedrooms = ?', params[:bedrooms])
     end
     
-    if params[:bathrooms].present? 
+    if params[:bathrooms].present?
       @properties = @properties.where('bathrooms = ?', params[:bathrooms])
     end
     
@@ -285,18 +285,18 @@ class PropertiesController < ApplicationController
   def set_user
     if params[:user_id].present?
       @user = User.find(params[:user_id])
-    end    
+    end
   end
     
-  def set_user_property    
+  def set_user_property
     @property = @user.properties.find_by!(id: params[:id]) if @user
-    @property = Property.find(params[:id]) 
+    @property = Property.find(params[:id])
   end
   
   def property_params
     # whitelist params
     params.permit(
-      :title, 
+      :title,
       :description,
       :bedrooms,
       :bathrooms,
