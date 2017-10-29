@@ -2,7 +2,7 @@ class UsersController < ApplicationController
 
   swagger_controller :users, 'Users Managment'
   
-  skip_before_action :authorize_request, only: :create
+  skip_before_action :authorize_request, only: [:create, :recovery]
   
   before_action :set_user, only: [:show, :update, :destroy]
 
@@ -65,6 +65,10 @@ class UsersController < ApplicationController
 
   # PUT /users/:id
   def update
+    if (user_params[:password])
+      @user.password = user_params[:password]
+      @user.password_reseted = false
+    end
     @user.update(user_params)
     head :no_content
   end
@@ -84,6 +88,36 @@ class UsersController < ApplicationController
   # GET /users/profile
   def profile
    json_response(current_user)
+  end
+
+  swagger_api :recovery do
+    summary 'Recovery Password'
+    param :form, :email, :string, :required, 'Email'
+  end
+
+  # GET /users/:email/recovery
+  def recovery
+    if params[:email].blank?
+      render json: {error: 'Email cannot be blank'}
+    end
+
+    # @users = User.all
+    # user = @users.where(email: params[:email])
+    user = User.find_by_email(params[:email])
+
+    if user.present?
+      if user.generate_password_token!
+
+        AppropMailer.recovery_mail(user).deliver
+
+        render json: {
+            status: 'Password has been reseted',
+            new_password: user.password
+        }
+      end
+    else
+      render json: {error: 'User not found'}
+    end
   end
     
   private

@@ -28,4 +28,6 @@ Rails.application.routes.draw do
   
   get '/search', to: 'properties#search'
 
+  post '/users/recovery', to: 'users#recovery'
+
 end
