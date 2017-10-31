@@ -108,7 +108,7 @@ class UsersController < ApplicationController
     if user.present?
       if user.generate_password_token!
 
-        AppropMailer.recovery_mail(user).deliver
+        # AppropMailer.recovery_mail(user).deliver
 
         render json: {
             status: 'Password has been reseted',

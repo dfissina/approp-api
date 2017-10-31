@@ -30,4 +30,16 @@ Rails.application.routes.draw do
 
   post '/users/recovery', to: 'users#recovery'
 
+  get '/likesids', to: 'likes#getAllLikesIds'
+
+  get '/dislikesids', to: 'dislikes#getAllDislikesIds'
+
+  get '/favouritesids', to: 'favourites#getAllFavouritesIds'
+
+  get '/favourite/:property_id', to: 'favourites#deleteByPropId'
+
+  get '/dislike/:property_id', to: 'dislikes#deleteByPropId'
+
+  get '/like/:property_id', to: 'likes#deleteByPropId'
+
 end

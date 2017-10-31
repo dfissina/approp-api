@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20171029180804) do
-=======
-ActiveRecord::Schema.define(version: 20171028155643) do
->>>>>>> 6ae3d567ddad6ba91c76e2de10a252b3a7dc1d71
 
   create_table "comunas", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "name"
@@ -90,8 +86,7 @@ ActiveRecord::Schema.define(version: 20171028155643) do
     t.index ["user_id"], name: "index_properties_on_user_id"
   end
 
-<<<<<<< HEAD
-  create_table "property_photos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci" do |t|
+  create_table "property_photos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.text "photo"
     t.integer "order"
     t.bigint "property_id"
@@ -100,10 +95,7 @@ ActiveRecord::Schema.define(version: 20171028155643) do
     t.index ["property_id"], name: "index_property_photos_on_property_id"
   end
 
-  create_table "regions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci" do |t|
-=======
   create_table "regions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
->>>>>>> 6ae3d567ddad6ba91c76e2de10a252b3a7dc1d71
     t.string "name"
     t.float "lat", limit: 24
     t.float "lng", limit: 24

@@ -10,7 +10,7 @@ class LikesController < ApplicationController
   
   # GET /likes
   def index
-   json_response(current_user.likes)
+    json_response(current_user.likes)
   end
 
   swagger_api :show do
@@ -53,5 +53,39 @@ class LikesController < ApplicationController
    @like.destroy
    head :no_content
   end
-  
+
+  swagger_api :getAllLikesIds do
+    summary 'All properties liked ids'
+    param :header, :Authorization, :string, :required, 'Authorization'
+    response :unauthorized
+  end
+
+  #GET /likesids
+  def getAllLikesIds
+    likes = []
+    current_user.likes.each do |like|
+      likes.push(like.property_id)
+    end
+    render json: {
+        likes_properties_ids: likes
+    }
+  end
+
+  swagger_api :deleteByPropId do
+    summary 'Delete like by property id'
+    param :path, :property_id, :integer, :required, 'Property id'
+    param :header, :Authorization, :string, :required, 'Authorization'
+    response :unauthorized
+  end
+
+  #GET /like/:property_id
+  def deleteByPropId
+    @like = Like.find_by_property_id(params[:property_id])
+    if !@like.nil?
+      @like.destroy
+      head :no_content
+    else
+      render json: { msg: 'Like not found' }
+    end
+  end
 end
