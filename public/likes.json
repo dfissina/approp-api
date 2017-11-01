@@ -128,6 +128,65 @@
           "method": "delete"
         }
       ]
+    },
+    {
+      "path": "/likesids",
+      "operations": [
+        {
+          "summary": "All properties liked ids",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Authorization",
+              "required": true
+            }
+          ],
+          "responseMessages": [
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "Unauthorized"
+            }
+          ],
+          "nickname": "Likes#getAllLikesIds",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/like/{property_id}",
+      "operations": [
+        {
+          "summary": "Delete like by property id",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "property_id",
+              "type": "integer",
+              "description": "Property id",
+              "required": true
+            },
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Authorization",
+              "required": true
+            }
+          ],
+          "responseMessages": [
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "Unauthorized"
+            }
+          ],
+          "nickname": "Likes#deleteByPropId",
+          "method": "get"
+        }
+      ]
     }
   ],
   "authorizations": null
