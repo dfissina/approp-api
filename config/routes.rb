@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :users do
-    resources :properties
+    collection do
+      get 'profile', to: 'users#profile'
+      post 'recovery', to: 'users#recovery'
+      post 'signup', to: 'users#create'
+    end
+    resources :properties    
   end
   
   resources :regions do
@@ -11,35 +16,29 @@ Rails.application.routes.draw do
   end
   
   resources :likes do
+    collection do
+      get '/ids', to: 'likes#getAllLikesIds'
+    end
   end
   
   resources :dislikes do
+    collection do
+      get '/ids', to: 'dislikes#getAllDislikesIds'
+    end
   end
   
   resources :favourites do
+    collection do
+      get '/ids', to: 'favourites#getAllFavouritesIds'
+    end
   end
   
   resources :properties do
+    collection do
+      get '/search', to: 'properties#search'
+    end
   end
   
   post 'auth/login', to: 'authentication#authenticate'
   
-  post 'signup', to: 'users#create'
-  
-  get '/search', to: 'properties#search'
-
-  post '/users/recovery', to: 'users#recovery'
-
-  get '/likesids', to: 'likes#getAllLikesIds'
-
-  get '/dislikesids', to: 'dislikes#getAllDislikesIds'
-
-  get '/favouritesids', to: 'favourites#getAllFavouritesIds'
-
-  get '/favourite/:property_id', to: 'favourites#deleteByPropId'
-
-  get '/dislike/:property_id', to: 'dislikes#deleteByPropId'
-
-  get '/like/:property_id', to: 'likes#deleteByPropId'
-
 end

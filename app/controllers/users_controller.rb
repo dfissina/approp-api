@@ -85,6 +85,11 @@ class UsersController < ApplicationController
     head :no_content
   end
    
+  swagger_api :profile do
+    summary 'User Profile'
+    param :header, :Authorization, :string, :required, 'Authorization'
+  end
+  
   # GET /users/profile
   def profile
    json_response(current_user)
@@ -95,14 +100,12 @@ class UsersController < ApplicationController
     param :form, :email, :string, :required, 'Email'
   end
 
-  # GET /users/:email/recovery
+  #POST /users/recovery
   def recovery
     if params[:email].blank?
       render json: {error: 'Email cannot be blank'}
     end
 
-    # @users = User.all
-    # user = @users.where(email: params[:email])
     user = User.find_by_email(params[:email])
 
     if user.present?

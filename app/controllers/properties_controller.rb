@@ -14,7 +14,14 @@ class PropertiesController < ApplicationController
   
   # GET /user/:user_id/properties
   def index
-   json_response(@user.properties)
+   @properties =  @user.properties
+   properties_size = @properties.size
+   @properties.paginate(:page => 1, :per_page => 20)
+   render json: {
+    properties: ActiveModel::Serializer::CollectionSerializer.new(@properties, serializer: PropertyResultSearchSerializer),
+    total_size: properties_size,
+    total_pages: 1
+   }
   end
 
   swagger_api :search do

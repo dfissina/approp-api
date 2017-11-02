@@ -47,8 +47,11 @@ class LikesController < ApplicationController
     response :unauthorized
   end
   
-  # DELETE /likes/:id
+  # DELETE /likes/:property_id
   def destroy
+   ########
+   # Borrar Like por property_id y current_user
+   ########
    @like = Like.find(params[:id])
    @like.destroy
    head :no_content
@@ -60,7 +63,7 @@ class LikesController < ApplicationController
     response :unauthorized
   end
 
-  #GET /likesids
+  #GET /likes/ids
   def getAllLikesIds
     likes = []
     current_user.likes.each do |like|
@@ -71,21 +74,4 @@ class LikesController < ApplicationController
     }
   end
 
-  swagger_api :deleteByPropId do
-    summary 'Delete like by property id'
-    param :path, :property_id, :integer, :required, 'Property id'
-    param :header, :Authorization, :string, :required, 'Authorization'
-    response :unauthorized
-  end
-
-  #GET /like/:property_id
-  def deleteByPropId
-    @like = Like.find_by_property_id(params[:property_id])
-    if !@like.nil?
-      @like.destroy
-      head :no_content
-    else
-      render json: { msg: 'Like not found' }
-    end
-  end
 end

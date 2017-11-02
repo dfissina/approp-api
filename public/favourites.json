@@ -1,9 +1,35 @@
 {
   "apiVersion": "1.0",
   "swaggerVersion": "1.2",
-  "basePath": "http://104.236.118.65:3000",
+  "basePath": "http://localhost:3000",
   "resourcePath": "favourites",
   "apis": [
+    {
+      "path": "/favourites/ids",
+      "operations": [
+        {
+          "summary": "All properties favourite ids",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Authorization",
+              "required": true
+            }
+          ],
+          "responseMessages": [
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "Unauthorized"
+            }
+          ],
+          "nickname": "Favourites#getAllFavouritesIds",
+          "method": "get"
+        }
+      ]
+    },
     {
       "path": "/favourites",
       "operations": [
@@ -126,65 +152,6 @@
           ],
           "nickname": "Favourites#destroy",
           "method": "delete"
-        }
-      ]
-    },
-    {
-      "path": "/favouritesids",
-      "operations": [
-        {
-          "summary": "All properties favourite ids",
-          "parameters": [
-            {
-              "paramType": "header",
-              "name": "Authorization",
-              "type": "string",
-              "description": "Authorization",
-              "required": true
-            }
-          ],
-          "responseMessages": [
-            {
-              "code": 401,
-              "responseModel": null,
-              "message": "Unauthorized"
-            }
-          ],
-          "nickname": "Favourites#getAllFavouritesIds",
-          "method": "get"
-        }
-      ]
-    },
-    {
-      "path": "/favourite/{property_id}",
-      "operations": [
-        {
-          "summary": "Delete favourite by property id",
-          "parameters": [
-            {
-              "paramType": "path",
-              "name": "property_id",
-              "type": "integer",
-              "description": "Property id",
-              "required": true
-            },
-            {
-              "paramType": "header",
-              "name": "Authorization",
-              "type": "string",
-              "description": "Authorization",
-              "required": true
-            }
-          ],
-          "responseMessages": [
-            {
-              "code": 401,
-              "responseModel": null,
-              "message": "Unauthorized"
-            }
-          ],
-          "nickname": "Favourites#deleteByPropId",
-          "method": "get"
         }
       ]
     }

@@ -47,8 +47,11 @@ class FavouritesController < ApplicationController
     response :unauthorized
   end
   
-  # DELETE /favourites/:id
+  # DELETE /favourites/:property_id
   def destroy
+   ########
+   # Borrar Like por property_id y current_user
+   ########
    @favourite = Favourite.find(params[:id])
    @favourite.destroy
    head :no_content
@@ -71,22 +74,4 @@ class FavouritesController < ApplicationController
     }
   end
 
-  swagger_api :deleteByPropId do
-    summary 'Delete favourite by property id'
-    param :path, :property_id, :integer, :required, 'Property id'
-    param :header, :Authorization, :string, :required, 'Authorization'
-    response :unauthorized
-  end
-
-  #GET /favourite/:property_id
-  def deleteByPropId
-    @favourite = Favourite.find_by_property_id(params[:property_id])
-    if !@favourite.nil?
-      @favourite.destroy
-      head :no_content
-    else
-      render json: { msg: 'Favourite not found' }
-    end
-
-  end
 end

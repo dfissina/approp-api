@@ -47,8 +47,11 @@ class DislikesController < ApplicationController
     response :unauthorized
   end
   
-  # DELETE /dislikes/:id
+  # DELETE /dislikes/:property_id
   def destroy
+  ########
+   # Borrar Like por property_id y current_user
+   ########
    @dislike = Dislike.find(params[:id])
    @dislike.destroy
    head :no_content
@@ -70,22 +73,5 @@ class DislikesController < ApplicationController
         dislikes_properties_ids: dislikes
     }
   end
-
-  swagger_api :deleteByPropId do
-    summary 'Delete dislike by property id'
-    param :path, :property_id, :integer, :required, 'Property id'
-    param :header, :Authorization, :string, :required, 'Authorization'
-    response :unauthorized
-  end
-
-  #GET /dislike/:property_id
-  def deleteByPropId
-    @dislike = Dislike.find_by_property_id(params[:property_id])
-    if !@dislike.nil?
-      @dislike.destroy
-      head :no_content
-    else
-      render json: { msg: 'Dislike not found' }
-    end
-  end
+  
 end
