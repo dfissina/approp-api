@@ -8,25 +8,30 @@ class PropertiesController < ApplicationController
   swagger_api :index do
     summary 'Show  all properties'
     param :path, :user_id, :integer, :required, 'User id'
+    param :query, :page, :integer, :optional, 'Page'
     param :header, :Authorization, :string, :required, 'Authorization'
     response :unauthorized
   end
   
   # GET /user/:user_id/properties
   def index
-   @properties =  @user.properties
-   properties_size = @properties.size
-   @properties.paginate(:page => 1, :per_page => 20)
-   render json: {
-    properties: ActiveModel::Serializer::CollectionSerializer.new(@properties, serializer: PropertyResultSearchSerializer),
-    total_size: properties_size,
-    total_pages: 1
-   }
+    if params[:page].present?
+      page = params[:page]
+    else
+      page = 1
+    end
+    @properties =  @user.properties
+    properties_size = @properties.size
+    @properties = @properties.paginate(:page => page, :per_page => 2)
+    render json: {
+      properties: ActiveModel::Serializer::CollectionSerializer.new(@properties, serializer: PropertyResultSearchSerializer),
+      total_size: properties_size,
+      total_pages: @properties.total_pages
+    }
   end
 
   swagger_api :search do
     summary 'Public search properties'
-    param :query, :id, :integer, :optional, 'Propiedad id'
     param :query, :cod, :string, :optional, 'Código de la propiedad'
     param :query, :keyword, :string, :optional, 'Palabra Clave'
     param :query, :bedrooms, :integer, :optional, 'Dormitorios'
@@ -62,10 +67,6 @@ class PropertiesController < ApplicationController
       
     @properties = Property.all
 
-    if params[:id].present?
-      @properties = @properties.where(id: params[:id])
-    end
-    
     if params[:cod].present?
       @properties = @properties.where(cod: params[:cod])
     end

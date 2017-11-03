@@ -18,18 +18,21 @@ Rails.application.routes.draw do
   resources :likes do
     collection do
       get '/ids', to: 'likes#getAllLikesIds'
+      delete '/:property_id', to: 'likes#destroy'
     end
   end
   
   resources :dislikes do
     collection do
       get '/ids', to: 'dislikes#getAllDislikesIds'
+      delete '/:property_id', to: 'dislikes#destroy'
     end
   end
   
   resources :favourites do
     collection do
       get '/ids', to: 'favourites#getAllFavouritesIds'
+      delete '/:property_id', to: 'favourites#destroy'
     end
   end
   

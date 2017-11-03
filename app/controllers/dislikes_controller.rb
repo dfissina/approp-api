@@ -4,13 +4,26 @@ class DislikesController < ApplicationController
 
   swagger_api :index do
     summary 'Show  all likes'
+    param :query, :page, :integer, :optional, 'Page'
     param :header, :Authorization, :string, :required, 'Authorization'
     response :unauthorized
   end
   
   # GET /dislikes
   def index
-   json_response(current_user.dislikes)
+    if params[:page].present?
+      page = params[:page]
+    else
+      page = 1
+    end
+    @dislikes =  current_user.dislikes
+    dislikes_size = @dislikes.size
+    @dislikes = @dislikes.paginate(:page => page, :per_page => 2)
+    render json: {
+        dislikes: ActiveModel::Serializer::CollectionSerializer.new(@dislikes, serializer: DislikeSerializer),
+        total_size: dislikes_size,
+        total_pages: @dislikes.total_pages
+    }
   end
 
   swagger_api :show do
@@ -41,20 +54,17 @@ class DislikesController < ApplicationController
   end
 
   swagger_api :destroy do
-    summary 'Delete dislike'
-    param :path, :id, :integer, :required, 'Like id'
+    summary 'Delete dislike by property id'
+    param :path, :property_id, :integer, :required, 'Property id'
     param :header, :Authorization, :string, :required, 'Authorization'
     response :unauthorized
   end
   
   # DELETE /dislikes/:property_id
   def destroy
-  ########
-   # Borrar Like por property_id y current_user
-   ########
-   @dislike = Dislike.find(params[:id])
-   @dislike.destroy
-   head :no_content
+    @dislike = Dislike.where(:property_id => params[:property_id]).where(:user_id => current_user.id).first
+    @dislike.destroy
+    head :no_content
   end
 
   swagger_api :getAllDislikesIds do
@@ -63,7 +73,7 @@ class DislikesController < ApplicationController
     response :unauthorized
   end
 
-  #GET /dislikesids
+  # GET /dislikes/ids
   def getAllDislikesIds
     dislikes = []
     current_user.dislikes.each do |dislike|

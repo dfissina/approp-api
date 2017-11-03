@@ -3,4 +3,13 @@ class DislikeSerializer < ActiveModel::Serializer
   attributes(*Dislike.attribute_names.map(&:to_sym))
  
   belongs_to :property
+  belongs_to :user
+
+  def property
+    object.property
+  end
+
+  def user
+    object.user
+  end
 end

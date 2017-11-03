@@ -4,13 +4,26 @@ class LikesController < ApplicationController
 
   swagger_api :index do
     summary 'Show  all likes'
+    param :query, :page, :integer, :optional, 'Page'
     param :header, :Authorization, :string, :required, 'Authorization'
     response :unauthorized
   end
   
   # GET /likes
   def index
-    json_response(current_user.likes)
+    if params[:page].present?
+      page = params[:page]
+    else
+      page = 1
+    end
+    @likes =  current_user.likes
+    likes_size = @likes.size
+    @likes = @likes.paginate(:page => page, :per_page => 2)
+    render json: {
+        likes: ActiveModel::Serializer::CollectionSerializer.new(@likes, serializer: LikeSerializer),
+        total_size: likes_size,
+        total_pages: @likes.total_pages
+    }
   end
 
   swagger_api :show do
@@ -41,18 +54,15 @@ class LikesController < ApplicationController
   end
 
   swagger_api :destroy do
-    summary 'Delete like'
-    param :path, :id, :integer, :required, 'Like id'
+    summary 'Delete like by property id'
+    param :path, :property_id, :integer, :required, 'Property id'
     param :header, :Authorization, :string, :required, 'Authorization'
     response :unauthorized
   end
   
   # DELETE /likes/:property_id
   def destroy
-   ########
-   # Borrar Like por property_id y current_user
-   ########
-   @like = Like.find(params[:id])
+   @like = Like.where(:property_id => params[:property_id]).where(:user_id => current_user.id).first
    @like.destroy
    head :no_content
   end
@@ -63,7 +73,7 @@ class LikesController < ApplicationController
     response :unauthorized
   end
 
-  #GET /likes/ids
+  # GET /likes/ids
   def getAllLikesIds
     likes = []
     current_user.likes.each do |like|

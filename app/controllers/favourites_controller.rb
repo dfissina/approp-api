@@ -4,13 +4,26 @@ class FavouritesController < ApplicationController
 
   swagger_api :index do
     summary 'Show  all favourites'
+    param :query, :page, :integer, :optional, 'Page'
     param :header, :Authorization, :string, :required, 'Authorization'
     response :unauthorized
   end
 
   # GET /favourites
   def index
-   json_response(current_user.favourites)
+    if params[:page].present?
+      page = params[:page]
+    else
+      page = 1
+    end
+    @favourites =  current_user.favourites
+    favs_size = @favourites.size
+    @favourites = @favourites.paginate(:page => page, :per_page => 2)
+    render json: {
+        favourites: ActiveModel::Serializer::CollectionSerializer.new(@favourites, serializer: FavouriteSerializer),
+        total_size: favs_size,
+        total_pages: @favourites.total_pages
+    }
   end
 
   swagger_api :show do
@@ -41,20 +54,17 @@ class FavouritesController < ApplicationController
   end
 
   swagger_api :destroy do
-    summary 'Delete favourite'
-    param :path, :id, :integer, :required, 'Like id'
+    summary 'Delete favourite by property id'
+    param :path, :property_id, :integer, :required, 'Property id'
     param :header, :Authorization, :string, :required, 'Authorization'
     response :unauthorized
   end
   
   # DELETE /favourites/:property_id
   def destroy
-   ########
-   # Borrar Like por property_id y current_user
-   ########
-   @favourite = Favourite.find(params[:id])
-   @favourite.destroy
-   head :no_content
+    @favourite = Favourite.where(:property_id => params[:property_id]).where(:user_id => current_user.id).first
+    @favourite.destroy
+    head :no_content
   end
 
   swagger_api :getAllFavouritesIds do
@@ -63,7 +73,7 @@ class FavouritesController < ApplicationController
     response :unauthorized
   end
 
-  #GET /favouritesids
+  # GET /favourites/ids
   def getAllFavouritesIds
     favourites = []
     current_user.favourites.each do |favourite|
