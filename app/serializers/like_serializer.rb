@@ -1,15 +1,5 @@
 class LikeSerializer < ActiveModel::Serializer
-  # response all property attributes
-  attributes(*Like.attribute_names.map(&:to_sym))
- 
-  belongs_to :property
-  belongs_to :user
-
-  def property
-    object.property
-  end
-
-  def user
-    object.user
-  end
+  attributes :id
+  belongs_to :property, :serializer => PropertyResultSearchSerializer
+  
 end

@@ -22,7 +22,7 @@ class PropertiesController < ApplicationController
     end
     @properties =  @user.properties
     properties_size = @properties.size
-    @properties = @properties.paginate(:page => page, :per_page => 2)
+    @properties = @properties.paginate(:page => page, :per_page => 20)
     render json: {
       properties: ActiveModel::Serializer::CollectionSerializer.new(@properties, serializer: PropertyResultSearchSerializer),
       total_size: properties_size,
@@ -66,7 +66,8 @@ class PropertiesController < ApplicationController
   def search
       
     @properties = Property.all
-
+    @properties = @properties.where(active: true)
+      
     if params[:cod].present?
       @properties = @properties.where(cod: params[:cod])
     end

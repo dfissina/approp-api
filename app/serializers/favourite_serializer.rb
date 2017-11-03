@@ -1,15 +1,5 @@
 class FavouriteSerializer < ActiveModel::Serializer
-  # response all property attributes
-  attributes(*Favourite.attribute_names.map(&:to_sym))
- 
-  belongs_to :property
-  belongs_to :user
+  attributes :id
+  belongs_to :property, :serializer => PropertyResultSearchSerializer
 
-  def property
-    object.property
-  end
-
-  def user
-    object.user
-  end
 end
