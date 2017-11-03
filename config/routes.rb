@@ -35,7 +35,11 @@ Rails.application.routes.draw do
   
   resources :properties do
     collection do
-      get '/search', to: 'properties#search'
+      get 'search', to: 'properties#search'
+    end
+    member do
+      put 'views', to: 'properties#views'
+      put 'active', to: 'properties#active'
     end
   end
   

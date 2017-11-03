@@ -1,9 +1,9 @@
 class PropertiesController < ApplicationController
 
   swagger_controller :properties, 'Properties Managment'
-  skip_before_action :authorize_request, only: [:search, :show]
-  before_action :set_user, only: [:index, :show, :create, :update, :destroy]
-  before_action :set_user_property, only: [:show, :update, :destroy]
+  skip_before_action :authorize_request, only: [:search, :show, :views]
+  before_action :set_user, only: [:index, :show, :create, :update, :destroy, :active]
+  before_action :set_property, only: [:show, :update, :destroy, :active, :views]
 
   swagger_api :index do
     summary 'Show  all properties'
@@ -147,8 +147,8 @@ class PropertiesController < ApplicationController
       end
     end
 
-
     properties_size = @properties.size
+    
     if params[:resultsperpage].present?
       result_per_page = params[:resultsperpage]
     else
@@ -282,6 +282,33 @@ class PropertiesController < ApplicationController
    head :no_content
   end
 
+  swagger_api :views do
+    summary 'Increment views property'
+    param :path, :id, :integer, :required, 'Property id'
+  end
+  
+  # PUT /properties/:id/views
+  def views
+   @property.update_attribute(:views, (@property.views + 1))
+   head :no_content
+  end
+  
+  swagger_api :active do
+    summary 'Active/Deactive property'
+    param :path, :id, :integer, :required, 'Property id'
+    param :header, :Authorization, :string, :required, 'Authorization'
+  end
+  
+  # PUT /properties/:id/active
+  def active
+   #if @property.active
+   #  @property.update_attribute(:active, false)
+   #else
+   #  @property.update_attribute(:active, true)
+   #end
+   @property.update_attribute(:active, (@property.active ? false : true))
+   head :no_content
+  end
 
   private
 
@@ -295,7 +322,7 @@ class PropertiesController < ApplicationController
     end
   end
     
-  def set_user_property
+  def set_property
     @property = @user.properties.find_by!(id: params[:id]) if @user
     @property = Property.find(params[:id])
   end
@@ -335,7 +362,9 @@ class PropertiesController < ApplicationController
       :departament,
       :resultsperpage,
       :radius,
-      :cod
+      :cod,
+      :views,
+      :active
     )
   end
 end

@@ -907,6 +907,51 @@
           "method": "get"
         }
       ]
+    },
+    {
+      "path": "/properties/{id}/views",
+      "operations": [
+        {
+          "summary": "Increment views property",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "id",
+              "type": "integer",
+              "description": "Property id",
+              "required": true
+            }
+          ],
+          "nickname": "Properties#views",
+          "method": "put"
+        }
+      ]
+    },
+    {
+      "path": "/properties/{id}/active",
+      "operations": [
+        {
+          "summary": "Active/Deactive property",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "id",
+              "type": "integer",
+              "description": "Property id",
+              "required": true
+            },
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Authorization",
+              "required": true
+            }
+          ],
+          "nickname": "Properties#active",
+          "method": "put"
+        }
+      ]
     }
   ],
   "authorizations": null
