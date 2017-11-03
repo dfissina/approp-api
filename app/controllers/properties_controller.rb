@@ -99,7 +99,11 @@ class PropertiesController < ApplicationController
       @properties = @properties.joins(:comuna).where("comunas.region_id == ?",  params[:region_id])
     end
     
-    if params[:price1].present? && params[:price2].present?
+    if params[:price1].present? && !params[:price2].present?
+      @properties = @properties.where('price >= ?', params[:price1])
+    elsif !params[:price1].present? && params[:price2].present?
+      @properties = @properties.where('price <= ?', params[:price2])
+    elsif params[:price1].present? && params[:price2].present?
       @properties = @properties.where('price between ? and ?', params[:price1], params[:price2])
     end
     
@@ -131,14 +135,22 @@ class PropertiesController < ApplicationController
       @properties = @properties.where('bathrooms = ?', params[:bathrooms])
     end
     
-    if params[:build_mtrs1].present? && params[:build_mtrs2].present?
+    if params[:build_mtrs1].present? && !params[:build_mtrs2].present?
+      @properties = @properties.where('build_mtrs >= ?', params[:build_mtrs1])
+    elsif !params[:build_mtrs1].present? && params[:build_mtrs2].present?
+      @properties = @properties.where('build_mtrs <= ?', params[:build_mtrs2])
+    elsif params[:build_mtrs1].present? && params[:build_mtrs2].present?
       @properties = @properties.where('build_mtrs between ? and ?', params[:build_mtrs1], params[:build_mtrs2])
     end
     
-    if params[:total_mtrs1].present? && params[:total_mtrs2].present?
+    if params[:total_mtrs1].present? && !params[:total_mtrs2].present?
+      @properties = @properties.where('total_mtrs >= ?', params[:total_mtrs1])
+    elsif !params[:total_mtrs1].present? && params[:total_mtrs2].present?
+      @properties = @properties.where('total_mtrs <= ?', params[:total_mtrs2])
+    elsif params[:total_mtrs1].present? && params[:total_mtrs2].present?
       @properties = @properties.where('total_mtrs between ? and ?', params[:total_mtrs1], params[:total_mtrs2])
     end
-
+    
     if params[:lat].present? && params[:lng].present?
       if params[:radius].present?
         @properties = @properties.within(params[:radius], :origin => [params[:lat], params[:lng]]).order('lat, lng desc')
