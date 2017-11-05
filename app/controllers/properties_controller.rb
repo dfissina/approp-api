@@ -315,11 +315,6 @@ class PropertiesController < ApplicationController
   
   # PUT /properties/:id/active
   def active
-   #if @property.active
-   #  @property.update_attribute(:active, false)
-   #else
-   #  @property.update_attribute(:active, true)
-   #end
    @property.update_attribute(:active, (@property.active ? false : true))
    head :no_content
   end

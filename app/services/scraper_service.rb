@@ -78,7 +78,8 @@ class ScraperService
       cod: data[:codigo],
       total_mtrs: data[:superficie_total],
       build_mtrs: data[:superficie_construida],
-      comuna_id: comuna.id
+      comuna_id: comuna.id,
+      active: true
     )
     
     if data[:fotos]

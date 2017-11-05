@@ -31,11 +31,51 @@
       ]
     },
     {
+      "path": "/favourites/{property_id}",
+      "operations": [
+        {
+          "summary": "Delete favourite by property id",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "property_id",
+              "type": "integer",
+              "description": "Property id",
+              "required": true
+            },
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Authorization",
+              "required": true
+            }
+          ],
+          "responseMessages": [
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "Unauthorized"
+            }
+          ],
+          "nickname": "Favourites#destroy",
+          "method": "delete"
+        }
+      ]
+    },
+    {
       "path": "/favourites",
       "operations": [
         {
           "summary": "Show  all favourites",
           "parameters": [
+            {
+              "paramType": "query",
+              "name": "page",
+              "type": "integer",
+              "description": "Page",
+              "required": false
+            },
             {
               "paramType": "header",
               "name": "Authorization",
@@ -119,39 +159,6 @@
           ],
           "nickname": "Favourites#show",
           "method": "get"
-        }
-      ]
-    },
-    {
-      "path": "/favourites/{id}",
-      "operations": [
-        {
-          "summary": "Delete favourite",
-          "parameters": [
-            {
-              "paramType": "path",
-              "name": "id",
-              "type": "integer",
-              "description": "Like id",
-              "required": true
-            },
-            {
-              "paramType": "header",
-              "name": "Authorization",
-              "type": "string",
-              "description": "Authorization",
-              "required": true
-            }
-          ],
-          "responseMessages": [
-            {
-              "code": 401,
-              "responseModel": null,
-              "message": "Unauthorized"
-            }
-          ],
-          "nickname": "Favourites#destroy",
-          "method": "delete"
         }
       ]
     }

@@ -20,6 +20,10 @@
       "description": "Comunas Managment"
     },
     {
+      "path": "/message_contacts.{format}",
+      "description": "Messages Managment"
+    },
+    {
       "path": "/likes.{format}",
       "description": "Likes Managment"
     },

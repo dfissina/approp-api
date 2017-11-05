@@ -31,11 +31,51 @@
       ]
     },
     {
+      "path": "/dislikes/{property_id}",
+      "operations": [
+        {
+          "summary": "Delete dislike by property id",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "property_id",
+              "type": "integer",
+              "description": "Property id",
+              "required": true
+            },
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Authorization",
+              "required": true
+            }
+          ],
+          "responseMessages": [
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "Unauthorized"
+            }
+          ],
+          "nickname": "Dislikes#destroy",
+          "method": "delete"
+        }
+      ]
+    },
+    {
       "path": "/dislikes",
       "operations": [
         {
           "summary": "Show  all likes",
           "parameters": [
+            {
+              "paramType": "query",
+              "name": "page",
+              "type": "integer",
+              "description": "Page",
+              "required": false
+            },
             {
               "paramType": "header",
               "name": "Authorization",
@@ -119,39 +159,6 @@
           ],
           "nickname": "Dislikes#show",
           "method": "get"
-        }
-      ]
-    },
-    {
-      "path": "/dislikes/{id}",
-      "operations": [
-        {
-          "summary": "Delete dislike",
-          "parameters": [
-            {
-              "paramType": "path",
-              "name": "id",
-              "type": "integer",
-              "description": "Like id",
-              "required": true
-            },
-            {
-              "paramType": "header",
-              "name": "Authorization",
-              "type": "string",
-              "description": "Authorization",
-              "required": true
-            }
-          ],
-          "responseMessages": [
-            {
-              "code": 401,
-              "responseModel": null,
-              "message": "Unauthorized"
-            }
-          ],
-          "nickname": "Dislikes#destroy",
-          "method": "delete"
         }
       ]
     }

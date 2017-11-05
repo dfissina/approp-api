@@ -18,6 +18,13 @@
               "required": true
             },
             {
+              "paramType": "query",
+              "name": "page",
+              "type": "integer",
+              "description": "Page",
+              "required": false
+            },
+            {
               "paramType": "header",
               "name": "Authorization",
               "type": "string",
@@ -669,13 +676,6 @@
         {
           "summary": "Public search properties",
           "parameters": [
-            {
-              "paramType": "query",
-              "name": "id",
-              "type": "integer",
-              "description": "Propiedad id",
-              "required": false
-            },
             {
               "paramType": "query",
               "name": "cod",

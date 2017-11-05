@@ -41,12 +41,6 @@ class UsersController < ApplicationController
     else
       json_response({error: 'El email ya se encuentra registrado en Approp'}, :unprocessable_entity)
     end      
-          
-          
-    #user = User.create!(user_params)
-    #auth_token = AuthenticateUser.new(user.email, user.password).call
-    #response = { message: Message.account_created, auth_token: auth_token }
-    #json_response(response, :created)
   end
 
   swagger_api :show do

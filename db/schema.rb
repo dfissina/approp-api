@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171102232542) do
+ActiveRecord::Schema.define(version: 20171103193344) do
 
   create_table "comunas", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci" do |t|
     t.string "name"
@@ -47,6 +47,19 @@ ActiveRecord::Schema.define(version: 20171102232542) do
     t.datetime "updated_at", null: false
     t.index ["property_id"], name: "index_likes_on_property_id"
     t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
+  create_table "message_contacts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci" do |t|
+    t.text "message"
+    t.string "name"
+    t.string "email"
+    t.string "phone"
+    t.bigint "sender_user_id"
+    t.bigint "property_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["property_id"], name: "index_message_contacts_on_property_id"
+    t.index ["sender_user_id"], name: "index_message_contacts_on_sender_user_id"
   end
 
   create_table "properties", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci" do |t|
@@ -127,6 +140,8 @@ ActiveRecord::Schema.define(version: 20171102232542) do
   add_foreign_key "favourites", "users"
   add_foreign_key "likes", "properties"
   add_foreign_key "likes", "users"
+  add_foreign_key "message_contacts", "properties"
+  add_foreign_key "message_contacts", "users", column: "sender_user_id"
   add_foreign_key "properties", "comunas"
   add_foreign_key "properties", "users"
   add_foreign_key "property_photos", "properties"

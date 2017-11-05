@@ -15,6 +15,9 @@ Rails.application.routes.draw do
   resources :comunas do
   end
   
+  resources :message_contacts do
+  end
+  
   resources :likes do
     collection do
       get '/ids', to: 'likes#getAllLikesIds'
