@@ -14,7 +14,7 @@ class PropertyResultSearchSerializer < ActiveModel::Serializer
   end
  
   def user
-    {:first_name => object.user.first_name, :last_name => object.user.last_name, :email => object.user.email}
+    {:first_name => object.user.first_name, :last_name => object.user.last_name, :email => object.user.email, :phone => object.user.phone}
   end
  
   def likes
