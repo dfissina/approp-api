@@ -119,6 +119,25 @@
       ]
     },
     {
+      "path": "/users/exists",
+      "operations": [
+        {
+          "summary": "User exists",
+          "parameters": [
+            {
+              "paramType": "form",
+              "name": "email",
+              "type": "string",
+              "description": "Email",
+              "required": true
+            }
+          ],
+          "nickname": "Users#exists",
+          "method": "post"
+        }
+      ]
+    },
+    {
       "path": "/users",
       "operations": [
         {

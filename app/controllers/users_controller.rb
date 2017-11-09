@@ -2,7 +2,7 @@ class UsersController < ApplicationController
 
   swagger_controller :users, 'Users Managment'
   
-  skip_before_action :authorize_request, only: [:create, :recovery]
+  skip_before_action :authorize_request, only: [:create, :recovery, :exists]
   
   before_action :set_user, only: [:show, :update, :destroy]
 
@@ -70,10 +70,24 @@ class UsersController < ApplicationController
 
   # PUT /users/:id
   def update
+    # Reset password
     if (user_params[:password])
       @user.password = user_params[:password]
       @user.password_reseted = false
     end
+   
+    #Email unique validation
+    if (user_params[:email])
+      user = User.find_by_email(user_params[:email])
+      pp "############# Id validation"
+      #pp user.id
+      #pp @user.id
+      if (user.present? && user.id != @user.id)
+        pp "########### Email already exists"
+        return render json: {error: 'El email ya se encuentra registrado en Approp'}
+      end 
+    end
+      
     @user.update(user_params)
     head :no_content
   end
@@ -115,17 +129,29 @@ class UsersController < ApplicationController
 
     if user.present?
       if user.generate_password_token!
-
-        # AppropMailer.recovery_mail(user).deliver
-
+        AppropMailer.recovery_mail(user).deliver
         render json: {
             status: 'Password has been reseted',
-            new_password: user.password
+            #new_password: user.password
         }
       end
     else
       render json: {error: 'User not found'}
     end
+  end
+  
+  swagger_api :exists do
+    summary 'User exists'
+    param :form, :email, :string, :required, 'Email'
+  end
+  
+  def exists
+    user = User.find_by_email(params[:email])
+    if (user.present?)  
+      render json: {id: user.id, status: user.present?}
+    else
+      render json: {status: user.present?}
+    end  
   end
     
   private
