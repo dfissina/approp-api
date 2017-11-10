@@ -79,12 +79,9 @@ class UsersController < ApplicationController
     #Email unique validation
     if (user_params[:email])
       user = User.find_by_email(user_params[:email])
-      pp "############# Id validation"
-      #pp user.id
-      #pp @user.id
       if (user.present? && user.id != @user.id)
-        pp "########### Email already exists"
-        return render json: {error: 'El email ya se encuentra registrado en Approp'}
+        return json_response({error: 'El email ya se encuentra registrado en Approp'}, :unprocessable_entity)
+        #return render json: {error: 'El email ya se encuentra registrado en Approp'}
       end 
     end
       
