@@ -41,6 +41,9 @@ gem 'rack-cors'
 # Use CarrierWave for image upload process
 gem 'carrierwave', '~> 1.0'
 
+# User file_validators for size and content type validations
+gem 'file_validators'
+
 # Serializers allow for custom representations of JSON responses
 gem 'active_model_serializers', '~> 0.10.0'
 

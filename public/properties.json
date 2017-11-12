@@ -309,70 +309,70 @@
               "name": "property_photos[0]",
               "type": "file",
               "description": "Foto 1",
-              "required": true
+              "required": false
             },
             {
               "paramType": "form",
               "name": "property_photos[1]",
               "type": "file",
               "description": "Foto 2",
-              "required": true
+              "required": false
             },
             {
               "paramType": "form",
               "name": "property_photos[2]",
               "type": "file",
               "description": "Foto 3",
-              "required": true
+              "required": false
             },
             {
               "paramType": "form",
               "name": "property_photos[3]",
               "type": "file",
               "description": "Foto 4",
-              "required": true
+              "required": false
             },
             {
               "paramType": "form",
               "name": "property_photos[4]",
               "type": "file",
               "description": "Foto 5",
-              "required": true
+              "required": false
             },
             {
               "paramType": "form",
               "name": "property_photos[5]",
               "type": "file",
               "description": "Foto 6",
-              "required": true
+              "required": false
             },
             {
               "paramType": "form",
               "name": "property_photos[6]",
               "type": "file",
               "description": "Foto 7",
-              "required": true
+              "required": false
             },
             {
               "paramType": "form",
               "name": "property_photos[7]",
               "type": "file",
               "description": "Foto 8",
-              "required": true
+              "required": false
             },
             {
               "paramType": "form",
               "name": "property_photos[8]",
               "type": "file",
               "description": "Foto 9",
-              "required": true
+              "required": false
             },
             {
               "paramType": "form",
               "name": "property_photos[9]",
               "type": "file",
               "description": "Foto 10",
-              "required": true
+              "required": false
             },
             {
               "paramType": "header",

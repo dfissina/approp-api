@@ -16,6 +16,11 @@ class User < ApplicationRecord
   
   enum rol: [:customer, :agent, :admin]
   #validates :rol, :email, presence: true
+    
+  mount_uploader :profile_picture, ProfilePictureUploader
+  
+  validates :profile_picture, file_size: { less_than_or_equal_to: 1.megabytes, message: 'El tamaño de su foto de perfil debe ser menor a 1 megabyte.'  },
+                              file_content_type: { allow: ['image/jpeg', 'image/png'], message: 'La foto de perfil deber ser JPG o PNG.'  }
   
   # Validations
   validates_presence_of :first_name, :last_name, :email, :password_digest, :birth_date, :rol

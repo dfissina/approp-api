@@ -27,6 +27,7 @@ class UsersController < ApplicationController
     param :form, :birth_date, :string, :required, 'Fecha Nacimiento'
     param :form, :phone, :string, :required, 'Teléfono'
     param :form, :cell_phone, :string, :required, 'Teléfono Celular'
+    param :form, :profile_picture, :file, :optional, 'Foto de perfil'
   end
 
   # POST /signup
@@ -65,6 +66,7 @@ class UsersController < ApplicationController
     param :form, :birth_date, :string, :optional, 'Fecha Nacimiento'
     param :form, :phone, :string, :optional, 'Teléfono'
     param :form, :cell_phone, :string, :optional, 'Celular'
+    param :form, :profile_picture, :file, :optional, 'Foto de perfil'
     param :header, :Authorization, :string, :required, 'Authorization'
   end
 
@@ -81,7 +83,6 @@ class UsersController < ApplicationController
       user = User.find_by_email(user_params[:email])
       if (user.present? && user.id != @user.id)
         return json_response({error: 'El email ya se encuentra registrado en Approp'}, :unprocessable_entity)
-        #return render json: {error: 'El email ya se encuentra registrado en Approp'}
       end 
     end
       
@@ -164,7 +165,8 @@ class UsersController < ApplicationController
       :phone, 
       :cell_phone,
       :password_confirmation,
-      :rol
+      :rol,
+      :profile_picture
     )
   end
   
