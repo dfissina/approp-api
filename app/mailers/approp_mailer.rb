@@ -9,8 +9,12 @@ class AppropMailer < ApplicationMailer
     @user = user
     @message = message
     @property = property
-    attachments.inline["logo.jpg"] = File.read("#{Rails.root}/app/assets/img/logo.jpg")
-    attachments.inline["property_principal.jpg"] = File.read("#{Rails.root}/public"+@property.property_photos.first.photo.url)
+    attachments.inline["logo.png"] = File.read("#{Rails.root}/app/assets/img/logo.png")
+    if @property.property_photos.size > 0 && @property.property_photos.first.photo? 
+      attachments.inline["property_principal.jpg"] = File.read("#{Rails.root}/public"+@property.property_photos.first.photo.url)
+    else
+      attachments.inline["property_principal.jpg"] = File.read("#{Rails.root}/app/assets/img/no-property-photo.jpg")
+    end       
     attachments.inline["face.png"] = File.read("#{Rails.root}/app/assets/img/facebook-128.png")
     attachments.inline["twitter.png"] = File.read("#{Rails.root}/app/assets/img/twitter-128.png")
     attachments.inline["linkedin.png"] = File.read("#{Rails.root}/app/assets/img/linkedin-128.png")    

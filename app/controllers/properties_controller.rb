@@ -230,13 +230,29 @@ class PropertiesController < ApplicationController
     param :form, :terrace, :boolean, :optional, 'Terraza'
     param :form, :lat, :double, :required, 'Latitud'
     param :form, :lng, :double, :required, 'Longitud'
+    param :form, "property_photos[0]", :file, :required, 'Foto 1'
+    param :form, "property_photos[1]", :file, :required, 'Foto 2'
+    param :form, "property_photos[2]", :file, :required, 'Foto 3'
+    param :form, "property_photos[3]", :file, :required, 'Foto 4'
+    param :form, "property_photos[4]", :file, :required, 'Foto 5'
+    param :form, "property_photos[5]", :file, :required, 'Foto 6'
+    param :form, "property_photos[6]", :file, :required, 'Foto 7'
+    param :form, "property_photos[7]", :file, :required, 'Foto 8'
+    param :form, "property_photos[8]", :file, :required, 'Foto 9'
+    param :form, "property_photos[9]", :file, :required, 'Foto 10'
     param :header, :Authorization, :string, :required, 'Authorization'
   end
 
   # POST /users/:user_id/properties
   def create
-   @user.properties.create!(property_params)
-   json_response(@user.properties.last, :created)
+    @property = Property.new(property_params)
+    @property.user_id = @user.id
+    if @property.save
+      params[:property_photos].each do |index, photo|
+        @property.property_photos.create!(photo: photo, property_id: @property.id, order: index.to_i + 1)
+      end
+    end
+    render json: @property, serializer: PropertyResultSearchSerializer, status: :created
   end
 
   swagger_api :update do

@@ -5,7 +5,7 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <style>
   	body{font-family: 'Roboto', sans-serif; color: #444;}
-  	.logo{width: 100px; height: 28px;}	
+  	.logo{width: 100px}	
   	.social{width: 48px; height: 48px;}
   </style>
 </head>
@@ -13,7 +13,7 @@
 
 <div style="margin: 0 auto; background: #fff; width: 60%; padding: 10px; text-align: center">
 	<p style="margin-bottom: 15px; border-bottom: 1px solid #ccc;">
-		<%= image_tag attachments['logo.jpg'].url, :class => "logo" %>
+		<%= image_tag attachments['logo.png'].url, :class => "logo" %>
 	</p>
 	<h2>Hola <%= @user.first_name %> <%= @user.last_name %></h2>
 	<h2><%= @message.name %> está interesado en tu propiedad: </h2>
