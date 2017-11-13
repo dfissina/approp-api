@@ -5,26 +5,30 @@
 #   gem 'sqlite3'
 #
 
-#DigitalOcean
-#default: &default
-#  adapter: mysql2
-#  encoding: utf8
-#  pool: 5
-#  database: approp_development
-#  username: root
-#  password: approp
-#  host: approp-db
-#  reconnect: true
-
-#Localhost
+#DigitalOcean Juan
 default: &default
   adapter: mysql2
   encoding: utf8
   pool: 5
   database: approp_development
   username: root
-  password: root
+  password: approp
+  host: approp-api-db
   reconnect: true
+#Para conectarse remoto agregar
+#  host: 104.236.118.65
+#  port: 3307
+
+
+#Localhost
+#default: &default
+#  adapter: mysql2
+#  encoding: utf8
+#  pool: 5
+#  database: approp_development
+#  username: root
+#  password: root
+#  reconnect: true
 #  socket: /opt/lampp/var/mysql/mysql.sock
 
 

@@ -1,6 +1,6 @@
 version: '2'
 services:
-  approp-db:
+  approp-api-db:
     image: mysql:5.7.18
     restart: always
     environment:
@@ -8,15 +8,21 @@ services:
     ports:
       - "3307:3306"
 
-  approp:
-    container_name: approp
+  approp-api:
+    container_name: approp-api
     build: .
     env_file: .env
     depends_on:
-      - approp-db
+      - approp-api-db
     links:
-      - approp-db
+      - approp-api-db
     environment:
-      RAILS_ENV: development
+      - RAILS_ENV=development
+    volumes:
+      - publicimages:/usr/src/app/public/uploads
     ports:
       - "3000:3000"
+
+volumes:
+  publicimages:
+    external: true

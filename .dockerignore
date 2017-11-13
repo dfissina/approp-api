@@ -1,6 +1,5 @@
 .git
 .gitignore
 README.md
-
+tmp
 db/*.sqlite3
-public/uploads

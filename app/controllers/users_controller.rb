@@ -77,7 +77,7 @@ class UsersController < ApplicationController
       @user.password = user_params[:password]
       @user.password_reseted = false
     end
-   
+
     #Email unique validation
     if (user_params[:email])
       user = User.find_by_email(user_params[:email])
@@ -85,7 +85,7 @@ class UsersController < ApplicationController
         return json_response({error: 'El email ya se encuentra registrado en Approp'}, :unprocessable_entity)
       end 
     end
-      
+
     @user.update(user_params)
     head :no_content
   end
