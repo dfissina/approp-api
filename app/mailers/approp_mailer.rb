@@ -2,7 +2,13 @@ class AppropMailer < ApplicationMailer
 
   def recovery_mail(user)
     @user = user
-    mail(to: @user.email, subject: 'Approp - Password recovery')
+    attachments.inline["logo.png"] = File.read("#{Rails.root}/app/assets/img/logo.png")
+    attachments.inline["face.png"] = File.read("#{Rails.root}/app/assets/img/facebook-128.png")
+    attachments.inline["twitter.png"] = File.read("#{Rails.root}/app/assets/img/twitter-128.png")
+    attachments.inline["linkedin.png"] = File.read("#{Rails.root}/app/assets/img/linkedin-128.png") 
+    mail(to: @user.email, subject: 'Approp - Nueva clave de acceso') do |format|
+      format.html
+    end
   end
   
   def message_contact_mail(message, user, property)

@@ -24,10 +24,10 @@ class ScraperService
     data = parse(url)
     data[:tipo] = tipo
     data[:operacion] = operacion
-    #if Property.find_by(external_id: data[:codigo]).present?
-    #  puts "Propiedad con codigo: #{data[:codigo]} ya existe :c"
-    #  return
-    #end
+    if Property.find_by(cod: data[:codigo]).present?
+      puts "Propiedad con codigo: #{data[:codigo]} ya existe :c"
+      return
+    end
     create_property(data)
   end
 

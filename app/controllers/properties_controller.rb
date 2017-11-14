@@ -20,7 +20,7 @@ class PropertiesController < ApplicationController
     else
       page = 1
     end
-    @properties =  @user.properties
+    @properties =  @user.properties.order('created_at ASC')
     properties_size = @properties.size
     @properties = @properties.paginate(:page => page, :per_page => 20)
     render json: {
@@ -69,7 +69,7 @@ class PropertiesController < ApplicationController
     @properties = @properties.where(active: true)
       
     if params[:cod].present?
-      @properties = @properties.where(cod: params[:cod])
+      @properties = @properties.where(id: params[:cod])
     end
 
     if params[:keyword].present?
@@ -199,7 +199,6 @@ class PropertiesController < ApplicationController
   swagger_api :create do
     summary 'Create property'
     param :path, :user_id, :integer, :required, 'User id'
-    param :form, :cod, :string, :required, 'Código de la propiedad'
     param :form, :title, :string, :required, 'Título'
     param :form, :description, :string, :required, 'Descripción'
     param :form, :bedrooms, :integer, :required, 'Dormitorios'
@@ -247,11 +246,11 @@ class PropertiesController < ApplicationController
   def create
     @property = Property.new(property_params)
     @property.user_id = @user.id
-    #if @property.save
+    if params[:property_photos]
       params[:property_photos].each do |index, photo|
         @property.property_photos.new(photo: photo, property_id: @property.id, order: index.to_i + 1)
       end
-    #end
+    end
     @property.save!
     render json: @property, serializer: PropertyResultSearchSerializer, status: :created
   end
@@ -260,7 +259,6 @@ class PropertiesController < ApplicationController
     summary 'Update property'
     param :path, :user_id, :integer, :required, 'User id'
     param :path, :id, :integer, :required, 'Property id'
-    param :form, :cod, :string, :optional , 'Código de la propiedad'
     param :form, :title, :string, :optional, 'Título'
     param :form, :description, :string, :optional, 'Descripción'
     param :form, :bedrooms, :integer, :optional, 'Dormitorios'

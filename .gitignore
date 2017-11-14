@@ -27,7 +27,7 @@ node_modules/
 
 /public/*.json
 
-#/public/uploads
+/public/uploads
 
 
 

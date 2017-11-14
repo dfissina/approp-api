@@ -16,9 +16,9 @@ class FavouritesController < ApplicationController
     else
       page = 1
     end
-    @favourites =  current_user.favourites
+    @favourites =  current_user.favourites.order('created_at ASC')
     favs_size = @favourites.size
-    @favourites = @favourites.paginate(:page => page, :per_page => 2)
+    @favourites = @favourites.paginate(:page => page, :per_page => 10)
     render json: {
         favourites: ActiveModel::Serializer::CollectionSerializer.new(@favourites, serializer: FavouriteSerializer),
         total_size: favs_size,

@@ -6,18 +6,28 @@
 #
 
 #DigitalOcean Juan
-default: &default
-  adapter: mysql2
-  encoding: utf8
-  pool: 5
-  database: approp_development
-  username: root
-  password: approp
-  host: approp-api-db
-  reconnect: true
+#default: &default
+#  adapter: mysql2
+#  encoding: utf8
+#  pool: 5
+#  database: approp_development
+#  username: root
+#  password: approp
+#  host: approp-api-db
+#  reconnect: true
 #Para conectarse remoto agregar
 #  host: 104.236.118.65
 #  port: 3307
+
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  pool: 10
+  database: approp
+  username: root
+  password: 4ppr0pdb2017
+  host: approp-api-db
+  reconnect: true
 
 
 #Localhost

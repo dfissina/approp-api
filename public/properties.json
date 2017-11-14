@@ -59,13 +59,6 @@
             },
             {
               "paramType": "form",
-              "name": "cod",
-              "type": "string",
-              "description": "Código de la propiedad",
-              "required": true
-            },
-            {
-              "paramType": "form",
               "name": "title",
               "type": "string",
               "description": "Título",
@@ -446,13 +439,6 @@
               "type": "integer",
               "description": "Property id",
               "required": true
-            },
-            {
-              "paramType": "form",
-              "name": "cod",
-              "type": "string",
-              "description": "Código de la propiedad",
-              "required": false
             },
             {
               "paramType": "form",

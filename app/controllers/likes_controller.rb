@@ -16,9 +16,9 @@ class LikesController < ApplicationController
     else
       page = 1
     end
-    @likes =  current_user.likes
+    @likes =  current_user.likes.order('created_at ASC')
     likes_size = @likes.size
-    @likes = @likes.paginate(:page => page, :per_page => 2)
+    @likes = @likes.paginate(:page => page, :per_page => 10)
     render json: {
         likes: ActiveModel::Serializer::CollectionSerializer.new(@likes, serializer: LikeSerializer),
         total_size: likes_size,
