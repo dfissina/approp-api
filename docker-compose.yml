@@ -4,7 +4,7 @@ services:
     image: mysql:5.7.18
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: approp
+      MYSQL_ROOT_PASSWORD: 4ppr0pdb2017
     ports:
       - "3307:3306"
 
