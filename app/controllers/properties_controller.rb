@@ -20,7 +20,7 @@ class PropertiesController < ApplicationController
     else
       page = 1
     end
-    @properties =  @user.properties.order('created_at ASC')
+    @properties =  @user.properties.order('created_at DESC')
     properties_size = @properties.size
     @properties = @properties.paginate(:page => page, :per_page => 20)
     render json: {

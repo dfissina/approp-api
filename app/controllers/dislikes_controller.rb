@@ -16,7 +16,7 @@ class DislikesController < ApplicationController
     else
       page = 1
     end
-    @dislikes =  current_user.dislikes
+    @dislikes =  current_user.dislikes.order('created_at DESC')
     dislikes_size = @dislikes.size
     @dislikes = @dislikes.paginate(:page => page, :per_page => 2)
     render json: {

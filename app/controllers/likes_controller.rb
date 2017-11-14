@@ -16,7 +16,7 @@ class LikesController < ApplicationController
     else
       page = 1
     end
-    @likes =  current_user.likes.order('created_at ASC')
+    @likes =  current_user.likes.order('created_at DESC')
     likes_size = @likes.size
     @likes = @likes.paginate(:page => page, :per_page => 10)
     render json: {

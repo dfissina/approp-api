@@ -16,7 +16,7 @@ class FavouritesController < ApplicationController
     else
       page = 1
     end
-    @favourites =  current_user.favourites.order('created_at ASC')
+    @favourites =  current_user.favourites.order('created_at DESC')
     favs_size = @favourites.size
     @favourites = @favourites.paginate(:page => page, :per_page => 10)
     render json: {

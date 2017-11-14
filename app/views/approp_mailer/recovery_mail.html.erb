@@ -6,13 +6,19 @@
   <style>
   	body{font-family: 'Roboto', sans-serif; color: #444;}
   	.logo{width: 100px}	
-  	.social{width: 48px; height: 48px;}
+  	.container{margin: 0 auto; background: #fff; width: 60%; padding: 10px; text-align: center; min-height:300px}
+  	@media (max-width: 768px) {
+	  .container {
+	    width: 98%;
+	  }
+	}
+  	.social{width: 32px; height: 32px;}
   </style>
 </head>
 
 <body style="background: #eee;">
 
-<div style="margin: 0 auto; background: #fff; width: 60%; padding: 10px; text-align: center; min-height:400px">
+<div class="container">
 	<p style="margin-bottom: 15px; border-bottom: 1px solid #ccc;">
 		<%= image_tag attachments['logo.png'].url, :class => "logo" %>
 	</p>

@@ -37,7 +37,7 @@ default: &default
 #  pool: 5
 #  database: approp_development
 #  username: root
-#  password: root
+#  password: 
 #  reconnect: true
 #  socket: /opt/lampp/var/mysql/mysql.sock
 
