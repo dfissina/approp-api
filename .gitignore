@@ -29,5 +29,7 @@ node_modules/
 
 /public/uploads
 
+config/application.yml
+
 
 
