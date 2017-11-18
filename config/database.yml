@@ -1,52 +1,20 @@
-# SQLite version 3.x
-#   gem install sqlite3
-#
-#   Ensure the SQLite 3 gem is defined in your Gemfile
-#   gem 'sqlite3'
-#
-
-#DigitalOcean Juan
-#default: &default
-#  adapter: mysql2
-#  encoding: utf8
-#  pool: 5
-#  database: approp_development
-#  username: root
-#  password: approp
-#  host: approp-api-db
-#  reconnect: true
-#Para conectarse remoto agregar
-#  host: 104.236.118.65
-#  port: 3307
-
 default: &default
   adapter: mysql2
   encoding: utf8
-  pool: 10
-  database: approp
-  username: root
-  password: 4ppr0pdb2017
-  host: approp-api-db
+  pool: <%= ENV['DB_POOL'] %>
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASS'] %>  
   reconnect: true
-
-
-#Localhost
-#default: &default
-#  adapter: mysql2
-#  encoding: utf8
-#  pool: 5
-#  database: approp_development
-#  username: root
-#  password: 
-#  reconnect: true
-#  socket: /opt/lampp/var/mysql/mysql.sock
-
-
+  #socket: /opt/lampp/var/mysql/mysql.sock
+  
 development:
   <<: *default
-
+  database: approp_development
+  
 test:
   <<: *default
 
 production:
   <<: *default
+  database: approp
+  host: approp-api-db
