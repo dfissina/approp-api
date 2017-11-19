@@ -3,16 +3,17 @@ default: &default
   encoding: utf8
   pool: <%= ENV['DB_POOL'] %>
   username: <%= ENV['DB_USER'] %>
-  password: <%= ENV['DB_PASS'] %>  
+  password: <%= ENV['DB_PASS'] %>
   reconnect: true
 #  socket: /opt/lampp/var/mysql/mysql.sock
-  
+
 development:
   <<: *default
   database: approp_development
-  
+
 test:
   <<: *default
+  database: approp_qa
 
 production:
   <<: *default
