@@ -14,6 +14,7 @@ development:
 test:
   <<: *default
   database: approp_qa
+  host: approp-api-db
 
 production:
   <<: *default
