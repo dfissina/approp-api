@@ -28,4 +28,16 @@ class AppropMailer < ApplicationMailer
       format.html
     end
   end
+
+  def account_created(user, accountHash)
+    @user = user
+    @accountHash = accountHash
+    attachments.inline["logo.png"] = File.read("#{Rails.root}/app/assets/img/logo.png")
+    attachments.inline["face.png"] = File.read("#{Rails.root}/app/assets/img/facebook-128.png")
+    attachments.inline["twitter.png"] = File.read("#{Rails.root}/app/assets/img/twitter-128.png")
+    attachments.inline["linkedin.png"] = File.read("#{Rails.root}/app/assets/img/linkedin-128.png")
+    mail(to: @user.email, subject: 'Approp - Nuevo Registro') do |format|
+      format.html
+    end
+  end
 end

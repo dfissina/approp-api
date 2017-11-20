@@ -2,7 +2,7 @@ class UsersController < ApplicationController
 
   swagger_controller :users, 'Users Managment'
   
-  skip_before_action :authorize_request, only: [:create, :recovery, :exists]
+  skip_before_action :authorize_request, only: [:create, :recovery, :exists, :activate]
   
   before_action :set_user, only: [:show, :update, :destroy]
 
@@ -36,8 +36,13 @@ class UsersController < ApplicationController
     user = User.find_by_email(params[:email])
     if !user.present?
       user = User.create!(user_params)
-      auth_token = AuthenticateUser.new(user.email, user.password).call
-      response = { message: Message.account_created, auth_token: auth_token }
+      user.account_active = false
+      user.save!
+      accountHash = AccountHash.create(:hashcode => create_hashcode, :user_id => user.id, :password => user.password)
+      AppropMailer.account_created(user, accountHash).deliver
+      # auth_token = AuthenticateUser.new(user.email, user.password).call
+      # response = { message: Message.account_created, auth_token: auth_token }
+      response = { message: Message.account_created }
       json_response(response, :created)
     else
       json_response({error: 'El email ya se encuentra registrado en Approp'}, :unprocessable_entity)
@@ -129,8 +134,7 @@ class UsersController < ApplicationController
       if user.generate_password_token!
         AppropMailer.recovery_mail(user).deliver
         render json: {
-            status: 'Password has been reseted',
-            #new_password: user.password
+            status: 'Password has been reseted'
         }
       end
     else
@@ -145,11 +149,30 @@ class UsersController < ApplicationController
   
   def exists
     user = User.find_by_email(params[:email])
-    if (user.present?)  
+    if user.present?
       render json: {id: user.id, status: user.present?}
     else
       render json: {status: user.present?}
     end  
+  end
+
+  #GET /users/activate
+  swagger_api :activate do
+    summary 'Activate account'
+    param :path, :hashcode, :string, :required, 'Hashcode'
+  end
+
+  def activate
+    accountHash = AccountHash.find_by_hashcode(params[:hashcode])
+    user = User.find_by(id: accountHash.user_id)
+    if user.present?
+      user.activate_account!
+      auth_token = AuthenticateUser.new(user.email, accountHash.password).call
+      accountHash.destroy!
+      render json: { message: Message.account_activated, auth_token: auth_token}
+    else
+      render json: { status: user.present? }
+    end
   end
     
   private
@@ -172,5 +195,9 @@ class UsersController < ApplicationController
   
   def set_user
     @user = User.find(params[:id])
+  end
+
+  def create_hashcode
+    SecureRandom.hex(20)
   end
 end

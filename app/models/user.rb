@@ -25,6 +25,11 @@ class User < ApplicationRecord
   # Validations
   validates_presence_of :first_name, :last_name, :email, :password_digest, :birth_date, :rol
 
+  def activate_account!
+    self.account_active = true
+    save!
+  end
+
   def generate_password_token!
     self.password = generate_password
     self.password_reseted = true
