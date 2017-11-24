@@ -40,10 +40,7 @@ class UsersController < ApplicationController
       user.save!
       accountHash = AccountHash.create(:hashcode => create_hashcode, :user_id => user.id, :password => user.password)
       AppropMailer.account_created(user, accountHash).deliver
-      # auth_token = AuthenticateUser.new(user.email, user.password).call
-      # response = { message: Message.account_created, auth_token: auth_token }
-      response = { message: Message.account_created }
-      json_response(response, :created)
+      render json:  { message: Message.account_created, hashcode: accountHash.hashcode }
     else
       json_response({error: 'El email ya se encuentra registrado en Approp'}, :unprocessable_entity)
     end      
@@ -156,17 +153,18 @@ class UsersController < ApplicationController
     end  
   end
 
-  #GET /users/activate
+  #POST /users/activate
   swagger_api :activate do
     summary 'Activate account'
-    param :path, :hashcode, :string, :required, 'Hashcode'
+    param :form, :hashcode, :string, :required, 'Hashcode'
   end
 
   def activate
     accountHash = AccountHash.find_by_hashcode(params[:hashcode])
     user = User.find_by(id: accountHash.user_id)
     if user.present?
-      user.activate_account!
+      user.account_active = true
+      user.save!
       auth_token = AuthenticateUser.new(user.email, accountHash.password).call
       accountHash.destroy!
       render json: { message: Message.account_activated, auth_token: auth_token}

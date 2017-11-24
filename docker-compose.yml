@@ -17,7 +17,7 @@ services:
     links:
       - approp-api-db
     environment:
-      - RAILS_ENV=development
+      - RAILS_ENV=test
     volumes:
       - publicimages:/usr/src/app/public/uploads
     ports:
