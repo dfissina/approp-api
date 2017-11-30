@@ -6,7 +6,7 @@ Rails.application.routes.draw do
       post 'recovery', to: 'users#recovery'
       post 'signup', to: 'users#create'
       post 'exists', to: 'users#exists'
-      get 'activate/:hashcode', to: 'users#activate'
+      post 'activate', to: 'users#activate'
     end
     resources :properties    
   end
