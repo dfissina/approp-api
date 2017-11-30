@@ -38,7 +38,13 @@
 	  <b>Puede contactarse con él a través de:</b>
 	</p>
 	<p>Email: <%= @message.email %></p>
-	<p>Tel: <%= @message.phone %></p>
+	<p>Tel:
+		<% if @objectname %>
+		  <%= @message.phone %>
+		<% else %>
+		  --
+		<% end %>		
+	</p>
 	<p style="paddin: 5px;border-bottom: 1px solid #ccc;"></p>
 	<p> Enviado desde <%= link_to "www.approp.cl", "http://www.approp.cl", :target => "_blank" %></p>
 	<p>Siguenos en</p>
