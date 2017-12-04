@@ -18,7 +18,7 @@ class DislikesController < ApplicationController
     end
     @dislikes =  current_user.dislikes.order('created_at DESC')
     dislikes_size = @dislikes.size
-    @dislikes = @dislikes.paginate(:page => page, :per_page => 2)
+    @dislikes = @dislikes.paginate(:page => page, :per_page => 10)
     render json: {
         dislikes: ActiveModel::Serializer::CollectionSerializer.new(@dislikes, serializer: DislikeSerializer),
         total_size: dislikes_size,

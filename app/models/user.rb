@@ -31,14 +31,14 @@ class User < ApplicationRecord
   end
 
   def generate_password_token!
-    self.password = generate_password
+    self.password = self.generate_password
     self.password_reseted = true
     save!
   end
-
-  private
-
-  def generate_password
+  
+  #private
+  
+  def self.generate_password
     SecureRandom.hex(10)
   end
 end
