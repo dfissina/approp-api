@@ -25,10 +25,10 @@
 	<h2>Hola <%= @user.first_name %> <%= @user.last_name %></h2>
 	<h2>tu cuenta fue creada con el email <strong><%= @user.email %></strong></h2>
 	<h2>Por favor ingresa al siguiente link para confirmar el registro</h2>
-  <h1><%= @accountHash.hashcode %></h1>
+  <h1><%= link_to "Activar cuenta", "http://www.approp.cl/activate?hashcode="+@accountHash.hashcode, :target => "_blank" %></h1>
 	
 	<p style="paddin: 5px;border-bottom: 1px solid #ccc;"></p>
-	<p>Enviado desde <%= link_to "www.approp.cl", "http://www.approp.cl", :target => "_blank" %></p>
+	<p>Enviado desde <%= link_to "www.appropl.cl", "http://www.approp.cl", :target => "_blank" %></p>
 	<p>Siguenos en</p>
 	<p><%= image_tag attachments['face.png'].url, :class => "social" %> <%= image_tag attachments['twitter.png'].url, :class => "social" %>
 	<%= image_tag attachments['linkedin.png'].url, :class => "social" %> </p>
