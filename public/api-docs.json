@@ -38,6 +38,10 @@
     {
       "path": "/authentication.{format}",
       "description": "Authentication Managment"
+    },
+    {
+      "path": "/statistics.{format}",
+      "description": "Statistics Managment"
     }
   ],
   "authorizations": null

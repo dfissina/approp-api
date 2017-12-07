@@ -10,9 +10,7 @@ default: &default
 development:
   <<: *default
   database: approp_development
-  database: approp_qa
-#  host: 165.227.115.124
-#  port: 3307
+
 
 test:
   <<: *default

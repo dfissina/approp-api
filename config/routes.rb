@@ -55,4 +55,6 @@ Rails.application.routes.draw do
   
   post 'auth/facebook' => 'authentication#facebook'
   
+  get 'statistics', to: 'statistics#index'
+  
 end

@@ -145,6 +145,25 @@
       ]
     },
     {
+      "path": "/users/activate",
+      "operations": [
+        {
+          "summary": "Activate account",
+          "parameters": [
+            {
+              "paramType": "form",
+              "name": "hashcode",
+              "type": "string",
+              "description": "Hashcode",
+              "required": true
+            }
+          ],
+          "nickname": "Users#activate",
+          "method": "post"
+        }
+      ]
+    },
+    {
       "path": "/users",
       "operations": [
         {
