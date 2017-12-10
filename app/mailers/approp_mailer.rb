@@ -1,7 +1,8 @@
 class AppropMailer < ApplicationMailer
 
-  def recovery_mail(user)
+  def recovery_mail(user, accountHash)
     @user = user
+    @accountHash = accountHash
     attachments.inline["logo.png"] = File.read("#{Rails.root}/app/assets/img/logo.png")
     attachments.inline["face.png"] = File.read("#{Rails.root}/app/assets/img/facebook-128.png")
     attachments.inline["twitter.png"] = File.read("#{Rails.root}/app/assets/img/twitter-128.png")

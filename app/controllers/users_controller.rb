@@ -2,7 +2,7 @@ class UsersController < ApplicationController
 
   swagger_controller :users, 'Users Managment'
   
-  skip_before_action :authorize_request, only: [:create, :recovery, :exists, :activate]
+  skip_before_action :authorize_request, only: [:create, :recovery, :exists, :activate, :recoverUser]
   
   before_action :set_user, only: [:show, :update, :destroy]
 
@@ -78,6 +78,10 @@ class UsersController < ApplicationController
     if (user_params[:password])
       @user.password = user_params[:password]
       @user.password_reseted = false
+      accountHash = AccountHash.find_by_user_id(@user.id)
+      if(accountHash.present?)
+        accountHash.destroy!
+      end
     end
 
     #Email unique validation
@@ -124,16 +128,22 @@ class UsersController < ApplicationController
     if params[:email].blank?
       render json: {error: 'Email cannot be blank'}
     end
-
     user = User.find_by_email(params[:email])
-
     if user.present?
-      if user.generate_password_token!
-        AppropMailer.recovery_mail(user).deliver
-        render json: {
-            status: 'Password has been reseted'
-        }
+      if(user.password_reseted)
+        accountHash = AccountHash.find_by_user_id(user.id)
+      else
+        passwordHash = User.generate_password
+        user.password = passwordHash
+        user.password_reseted = true
+        user.save!
+        accountHash = AccountHash.create(:hashcode => create_hashcode, :user_id => user.id, :password => passwordHash)
       end
+      AppropMailer.recovery_mail(user, accountHash).deliver
+      render json: {
+          status: 'Password has been reseted',
+          hashcode: accountHash.hashcode
+      }
     else
       render json: {error: 'User not found'}
     end
@@ -168,6 +178,23 @@ class UsersController < ApplicationController
       auth_token = AuthenticateUser.new(user.email, accountHash.password).call
       accountHash.destroy!
       render json: { message: Message.account_activated, auth_token: auth_token}
+    else
+      render json: { status: user.present? }
+    end
+  end
+
+  #POST /users/recoverUser
+  swagger_api :recoverUser do
+    summary 'Recover User for change password'
+    param :form, :hashcode, :string, :required, 'Hashcode'
+  end
+
+  def recoverUser
+    accountHash = AccountHash.find_by_hashcode(params[:hashcode])
+    user = User.find_by(id: accountHash.user_id)
+    if user.present?
+      auth_token = AuthenticateUser.new(user.email, accountHash.password).call
+      render json: { auth_token: auth_token}
     else
       render json: { status: user.present? }
     end

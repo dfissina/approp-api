@@ -24,7 +24,7 @@
 	</p>
 	<h2>Hola <%= @user.first_name %> <%= @user.last_name %></h2>
 	<h2>tu nueva clave de acceso es:</h2>
-	<h1><strong><%= @user.password %></strong></h1> 
+  <h1><%= link_to "Recuperar contraseña", "http://www.approp.cl/recoveryPassword?hashcode="+@accountHash.hashcode, :target => "_blank" %></h1>
 	
 	<p style="paddin: 5px;border-bottom: 1px solid #ccc;"></p>
 	<p>Enviado desde <%= link_to "www.approp.cl", "http://www.approp.cl", :target => "_blank" %></p>
