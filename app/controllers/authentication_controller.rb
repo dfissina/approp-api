@@ -15,6 +15,8 @@ class AuthenticationController < ApplicationController
   def authenticate
     user = User.find_by_email(auth_params[:email])
     return json_response({message: 'Invalid credentials'}, :unauthorized) if !user.present?
+    user.last_login = Time.now
+    user.save!
     auth_token = AuthenticateUser.new(auth_params[:email], auth_params[:password]).call
     render json: { auth_token: auth_token}
   end
@@ -26,6 +28,8 @@ class AuthenticationController < ApplicationController
     user.password = random_password
     user.password_confirmation = random_password
     user.remote_profile_picture_url = auth_params[:picture]
+    user.facebook_account = true
+    user.last_login = Time.now
     user.save!
     auth_token = AuthenticateUser.new(user.email, user.password).call
     render json: { auth_token: auth_token}

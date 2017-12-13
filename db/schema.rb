@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171120155507) do
+ActiveRecord::Schema.define(version: 20171212235546) do
 
   create_table "account_hashes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci" do |t|
     t.string "hashcode"
@@ -23,8 +23,8 @@ ActiveRecord::Schema.define(version: 20171120155507) do
 
   create_table "comunas", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci" do |t|
     t.string "name"
-    t.float "lat", precision: 10, scale: 8
-    t.float "lng", precision: 11, scale: 8
+    t.float "lat", limit: 24
+    t.float "lng", limit: 24
     t.bigint "region_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -101,8 +101,8 @@ ActiveRecord::Schema.define(version: 20171120155507) do
     t.decimal "expenses", precision: 10
     t.boolean "pets"
     t.boolean "terrace"
-    t.float "lat", precision: 10, scale: 8
-    t.float "lng", precision: 11, scale: 8
+    t.float "lat", limit: 24
+    t.float "lng", limit: 24
     t.string "cod"
     t.integer "views", default: 0, null: false
     t.boolean "active", default: true, null: false
@@ -121,8 +121,8 @@ ActiveRecord::Schema.define(version: 20171120155507) do
 
   create_table "regions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci" do |t|
     t.string "name"
-    t.float "lat", precision: 10, scale: 8
-    t.float "lng", precision: 11, scale: 8
+    t.float "lat", limit: 24
+    t.float "lng", limit: 24
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -141,6 +141,8 @@ ActiveRecord::Schema.define(version: 20171120155507) do
     t.integer "rol"
     t.boolean "password_reseted"
     t.boolean "account_active"
+    t.boolean "facebook_account"
+    t.datetime "last_login"
   end
 
   add_foreign_key "account_hashes", "users"
