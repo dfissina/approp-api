@@ -23,7 +23,7 @@
 		<%= image_tag attachments['logo.png'].url, :class => "logo" %>
 	</p>
 	<h2>Hola <%= @user.first_name %> <%= @user.last_name %></h2>
-	<h2>tu nueva clave de acceso es:</h2>
+	<h2>cambia tu contraseña en el siguiente link</h2>
   <h1><%= link_to "Recuperar contraseña", "http://www.approp.cl/recoveryPassword?hashcode="+@accountHash.hashcode, :target => "_blank" %></h1>
 	
 	<p style="paddin: 5px;border-bottom: 1px solid #ccc;"></p>
