@@ -39,4 +39,8 @@ class Message
   def self.account_activated
     'Account activated successfully'
   end
+
+  def self.email_updated
+    'Email updated successfully'
+  end
 end

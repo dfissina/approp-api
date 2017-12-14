@@ -38,7 +38,7 @@ class UsersController < ApplicationController
       user = User.create!(user_params)
       user.account_active = false
       user.save!
-      accountHash = AccountHash.create(:hashcode => create_hashcode, :user_id => user.id, :password => user.password)
+      accountHash = AccountHash.create(:hashcode => create_hashcode, :user_id => user.id, :password => user.password, :temp_email => nil)
       AppropMailer.account_created(user, accountHash).deliver
       render json:  { message: Message.account_created, hashcode: accountHash.hashcode }
     else
@@ -75,24 +75,33 @@ class UsersController < ApplicationController
   # PUT /users/:id
   def update
     # Reset password
-    if (user_params[:password])
+    if user_params[:password]
       @user.password = user_params[:password]
       @user.password_reseted = false
       accountHash = AccountHash.find_by_user_id(@user.id)
-      if(accountHash.present?)
+      if accountHash.present?
         accountHash.destroy!
       end
+      @user.update(user_params)
+      head :no_content
     end
 
     #Email unique validation
-    if (user_params[:email])
+    if user_params[:email]
       user = User.find_by_email(user_params[:email])
-      if (user.present? && user.id != @user.id)
+      if user.present? && user.id != @user.id
         return json_response({error: 'El email ya se encuentra registrado en Approp'}, :unprocessable_entity)
-      end 
+      end
+      if user_params[:email] != @user.email
+        accountHash = AccountHash.find_by_user_id(@user.id)
+        unless accountHash.present?
+          accountHash = AccountHash.create(:hashcode => create_hashcode, :user_id => @user.id, :password => nil, :temp_email => user_params[:email])
+        end
+        AppropMailer.new_email(@user, accountHash).deliver
+      else
+        @user.update(user_params)
+      end
     end
-
-    @user.update(user_params)
     head :no_content
   end
 
@@ -130,14 +139,14 @@ class UsersController < ApplicationController
     end
     user = User.find_by_email(params[:email])
     if user.present?
-      if(user.password_reseted)
+      if user.password_reseted
         accountHash = AccountHash.find_by_user_id(user.id)
       else
         passwordHash = User.generate_password
         user.password = passwordHash
         user.password_reseted = true
         user.save!
-        accountHash = AccountHash.create(:hashcode => create_hashcode, :user_id => user.id, :password => passwordHash)
+        accountHash = AccountHash.create(:hashcode => create_hashcode, :user_id => user.id, :password => passwordHash, :temp_email => nil)
       end
       AppropMailer.recovery_mail(user, accountHash).deliver
       render json: {
@@ -173,11 +182,18 @@ class UsersController < ApplicationController
     accountHash = AccountHash.find_by_hashcode(params[:hashcode])
     user = User.find_by(id: accountHash.user_id)
     if user.present?
-      user.account_active = true
-      user.save!
-      auth_token = AuthenticateUser.new(user.email, accountHash.password).call
-      accountHash.destroy!
-      render json: { message: Message.account_activated, auth_token: auth_token}
+      if accountHash.temp_email.nil?
+        user.account_active = true
+        user.save!
+        auth_token = AuthenticateUser.new(user.email, accountHash.password).call
+        accountHash.destroy!
+        render json: { message: Message.account_activated, auth_token: auth_token}
+      else
+        user.email = accountHash.temp_email
+        user.save!
+        accountHash.destroy!
+        render json: { message: Message.email_updated }
+      end
     else
       render json: { status: user.present? }
     end
@@ -191,12 +207,16 @@ class UsersController < ApplicationController
 
   def recoverUser
     accountHash = AccountHash.find_by_hashcode(params[:hashcode])
-    user = User.find_by(id: accountHash.user_id)
-    if user.present?
-      auth_token = AuthenticateUser.new(user.email, accountHash.password).call
-      render json: { auth_token: auth_token}
+    if accountHash.present?
+      user = User.find_by(id: accountHash.user_id)
+      if user.present?
+        auth_token = AuthenticateUser.new(user.email, accountHash.password).call
+        render json: { auth_token: auth_token}
+      else
+        render json: { status: user.present? }
+      end
     else
-      render json: { status: user.present? }
+      render json: { status: accountHash.present? }
     end
   end
     
