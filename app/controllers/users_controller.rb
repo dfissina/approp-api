@@ -135,7 +135,7 @@ class UsersController < ApplicationController
   #POST /users/recovery
   def recovery
     if params[:email].blank?
-      render json: {error: 'Email cannot be blank'}
+      return json_response({error: 'Email cannot be blank'}, :unprocessable_entity)
     end
     user = User.find_by_email(params[:email])
     if user.present?
@@ -154,7 +154,7 @@ class UsersController < ApplicationController
           hashcode: accountHash.hashcode
       }
     else
-      render json: {error: 'User not found'}
+      json_response({error: 'User not found'}, :unprocessable_entity)
     end
   end
   
@@ -195,7 +195,7 @@ class UsersController < ApplicationController
         render json: { message: Message.email_updated }
       end
     else
-      render json: { status: user.present? }
+      json_response({error: 'User not found'}, :unprocessable_entity)
     end
   end
 
@@ -213,10 +213,10 @@ class UsersController < ApplicationController
         auth_token = AuthenticateUser.new(user.email, accountHash.password).call
         render json: { auth_token: auth_token}
       else
-        render json: { status: user.present? }
+        json_response({error: 'User not found'}, :unprocessable_entity)
       end
     else
-      render json: { status: accountHash.present? }
+      json_response({error: 'Hashcode not found'}, :unprocessable_entity)
     end
   end
     
