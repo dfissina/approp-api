@@ -8,8 +8,8 @@ namespace :scraper do
 	#https://www.portalinmobiliario.com/venta/departamento/centro-historico-de-santiago-santiago-santiago-metropolitana?ca=3
 	
     operaciones = ['venta', 'arriendo']
-    tipos = ['departamento', 'casa']
-    comunas = ['providencia-metropolitana', 'las-condes-metropolitana', 'nunoa-metropolitana', 'centro-historico-de-santiago-santiago-santiago-metropolitana']
+    tipos = ['departamento', 'casa', 'parcela', 'terreno-en-construccion']
+    comunas = ['providencia-metropolitana', 'las-condes-metropolitana', 'nunoa-metropolitana', 'centro-historico-de-santiago-santiago-santiago-metropolitana', 'chicureo-colina-chacabuco-metropolitana']
     
     comunas.each do |comuna|
 	    tipos.each do |tipo|

@@ -219,6 +219,18 @@ class UsersController < ApplicationController
       json_response({error: 'Hashcode not found'}, :unprocessable_entity)
     end
   end
+  
+  swagger_api :check_send_documents do
+    summary 'User Check Send Documents'
+    param :header, :Authorization, :string, :required, 'Authorization'
+  end
+  
+  # GET /users/profile
+  def check_send_documents
+    current_user.send_documents = current_user.send_documents ? false : true
+    current_user.save!
+    head :no_content
+  end
     
   private
 

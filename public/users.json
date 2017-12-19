@@ -164,6 +164,25 @@
       ]
     },
     {
+      "path": "/users/check_send_documents",
+      "operations": [
+        {
+          "summary": "User Check Send Documents",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Authorization",
+              "required": true
+            }
+          ],
+          "nickname": "Users#check_send_documents",
+          "method": "post"
+        }
+      ]
+    },
+    {
       "path": "/users",
       "operations": [
         {

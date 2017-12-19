@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       post 'signup', to: 'users#create'
       post 'exists', to: 'users#exists'
       post 'activate', to: 'users#activate'
+      post 'check_send_documents', to: 'users#check_send_documents'
     end
     resources :properties
     resources :documents
