@@ -12,6 +12,10 @@
       "description": "Properties Managment"
     },
     {
+      "path": "/documents.{format}",
+      "description": "User Documents Managment"
+    },
+    {
       "path": "/regions.{format}",
       "description": "Regiones Managment"
     },

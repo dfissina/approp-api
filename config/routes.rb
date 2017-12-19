@@ -8,7 +8,8 @@ Rails.application.routes.draw do
       post 'exists', to: 'users#exists'
       post 'activate', to: 'users#activate'
     end
-    resources :properties    
+    resources :properties
+    resources :documents
   end
   
   resources :regions do

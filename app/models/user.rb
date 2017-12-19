@@ -14,6 +14,8 @@ class User < ApplicationRecord
   has_many :favourites
   has_many :favourites_properties, through: :favourites
   
+  has_many :documents
+  
   enum rol: [:customer, :agent, :admin]
   #validates :rol, :email, presence: true
     
