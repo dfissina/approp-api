@@ -10,18 +10,26 @@ class UserDocumentsSerializer < ActiveModel::Serializer
     response_documents = []
     documents_by_type = []
     documents = object.documents.order('document_type_id asc')
-    current_document_type = documents.first.document_type_id  
+    current_document = documents.first
     documents.each do |document|
-      if current_document_type != document.document_type_id
-        response_documents.push({:type_id => current_document_type, :documents => documents_by_type})
+      if current_document.document_type.id != document.document_type_id
+        response_documents.push({
+          :document_type_id => current_document.document_type.id, 
+          :document_type_name => current_document.document_type.name,
+          :documents => documents_by_type
+        })        
         documents_by_type = []  
-        current_document_type = document.document_type_id
+        current_document = document
       end
-      documents_by_type.push({:url => document.document.url})
+      documents_by_type.push({:id => document.id, :url => document.document.url})
     end
     
     if !documents_by_type.empty?
-      response_documents.push({:type_id => current_document_type, :documents => documents_by_type})
+      response_documents.push({
+        :document_type_id => current_document.document_type.id, 
+        :document_type_name => current_document.document_type.name, 
+        :documents => documents_by_type
+      })
     end
     
     @documents_size = response_documents.size

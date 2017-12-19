@@ -28,7 +28,7 @@ class DocumentsController < ApplicationController
   def create
     @user.documents.new(document: params[:document], document_type_id: params[:document_type_id])
     @user.save!
-    render json: @user.documents, status: :created
+    render json: @user.documents.last, status: :created
   end
 
   swagger_api :show do
