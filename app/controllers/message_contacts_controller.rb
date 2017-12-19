@@ -26,19 +26,20 @@ class MessageContactsController < ApplicationController
 
   # POST /messages
   def create   
+    
     @message = MessageContact.new(
       email: message_contacts_params[:email],
       name: message_contacts_params[:name],
       phone: message_contacts_params[:phone],
       message: message_contacts_params[:message],
       property_id: message_contacts_params[:property_id],
-      sender_user_id: current_user.id
+      user_id: current_user.id
     )
     
     property = Property.find(params[:property_id])
     user_to = User.find_by_email(property.user.email) if property.user.email
     
-    if !user_to.email.blank?
+    if @message.save! && !user_to.email.blank?
       AppropMailer.message_contact_mail(@message, user_to, property).deliver
       json_response({status: 'Mensaje enviado a:'+property.user.email}, :created)
     else

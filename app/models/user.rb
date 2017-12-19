@@ -16,6 +16,8 @@ class User < ApplicationRecord
   
   has_many :documents
   
+  has_many :message_contacts
+  
   enum rol: [:customer, :agent, :admin]
   #validates :rol, :email, presence: true
     
