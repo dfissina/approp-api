@@ -21,7 +21,7 @@ class UserDocumentsSerializer < ActiveModel::Serializer
         documents_by_type = []  
         current_document = document
       end
-      documents_by_type.push({:id => document.id, :url => document.document.url})
+      documents_by_type.push({:id => document.id, :url => document.document.url, :order => document.order})
     end
     
     if !documents_by_type.empty?
