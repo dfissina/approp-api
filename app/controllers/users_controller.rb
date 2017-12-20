@@ -146,7 +146,7 @@ class UsersController < ApplicationController
     user = User.find_by_email(params[:email])
     if user.present? && user.account_active? && !user.facebook_account
       accountHash = AccountHash.find_by_user_id(user.id)
-      accountHash.new(:hashcode => create_hashcode, :user_id => user.id, :temp_email => nil) if !accountHash.present?
+      accountHash.new(:hashcode => create_hashcode, :user_id => user.id) if !accountHash.present?
       if !user.password_reseted
         passwordHash = User.generate_password
         user.password = passwordHash
