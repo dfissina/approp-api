@@ -56,7 +56,13 @@ class ScraperService
     comuna = Comuna.where('lower(name) = ?', comuna_limpia).first
     
     raise "No se encontro la comuna #{comuna_limpia} se limpio: #{data[:comuna]}" if comuna.blank?
-
+    
+    if data[:tipo] == 'terreno-en-construccion'
+      property_type = 'terreno'
+    else
+      property_type = data[:tipo]
+    end
+    
     property = Property.create(
       title: data[:titulo],
       description: data[:descripcion],
@@ -70,7 +76,7 @@ class ScraperService
       currency: 'clp',
       user_id: user.id,
       created_at: data[:publicada],
-      property_type: data[:tipo],
+      property_type: property_type,
       operation: data[:operacion],
       state: 'usada',
       orientation: 'norte',

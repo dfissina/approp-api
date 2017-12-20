@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171219220441) do
+ActiveRecord::Schema.define(version: 20171220173647) do
 
   create_table "account_hashes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci" do |t|
     t.string "hashcode"
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 20171219220441) do
     t.bigint "document_type_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "order"
     t.index ["document_type_id"], name: "index_documents_on_document_type_id"
     t.index ["user_id"], name: "index_documents_on_user_id"
   end

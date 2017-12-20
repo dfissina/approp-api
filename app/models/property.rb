@@ -15,7 +15,7 @@ class Property < ApplicationRecord
   
   has_many :property_photos, dependent: :destroy
   
-  enum property_type: [:casa, :departamento]
+  enum property_type: [:casa, :departamento, :parcela, :terreno]
   
   enum operation: [:venta, :arriendo]
     

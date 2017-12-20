@@ -8,7 +8,7 @@ namespace :scraper do
 	#https://www.portalinmobiliario.com/venta/departamento/centro-historico-de-santiago-santiago-santiago-metropolitana?ca=3
 	
     operaciones = ['venta', 'arriendo']
-    tipos = ['departamento', 'casa', 'parcela', 'terreno-en-construccion']
+    tipos = ['parcela', 'terreno-en-construccion', 'departamento', 'casa']
     comunas = ['providencia-metropolitana', 'las-condes-metropolitana', 'nunoa-metropolitana', 'centro-historico-de-santiago-santiago-santiago-metropolitana', 'chicureo-colina-chacabuco-metropolitana']
     
     comunas.each do |comuna|
@@ -22,13 +22,18 @@ namespace :scraper do
 	          url_resultados = "https://www.portalinmobiliario.com/#{operacion}/#{tipo}/#{comuna}?ca=3&ts=1&mn=2&or=&sf=1&sp=1&at=0&pg=#{pagina}"
 	          response = Faraday.get url_resultados
 	          page = Nokogiri::HTML(response.body)
+			  no_result = page.css('div.search-no-results')
+			  
+			  if no_result.size == 0
+	          	puts "Starting job for page: #{pagina} & tipo: #{tipo} & operacion: #{operacion}"
+	          	#puts "Starting job for page: #{pagina} & tipo: casa & operacion: venta"
+	          	ScraperJob.perform_now(url_resultados, tipo, operacion)
 	
-	          puts "Starting job for page: #{pagina} & tipo: #{tipo} & operacion: #{operacion}"
-	          #puts "Starting job for page: #{pagina} & tipo: casa & operacion: venta"
-	          ScraperJob.perform_now(url_resultados, tipo, operacion)
-	
-	          last_page_class = page.css('ul.pagination li')[-1].attr('class')
-	          pagina += 1
+	          	last_page_class = page.css('ul.pagination li')[-1].attr('class')
+	          	pagina += 1
+	          else
+	          	last_page_class = 'active'
+	          end
 	        end
 	      
 	      end
