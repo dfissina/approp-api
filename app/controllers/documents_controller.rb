@@ -21,12 +21,13 @@ class DocumentsController < ApplicationController
     param :path, :user_id, :integer, :required, 'User id'
     param :form, :document_type_id, :integer, :required, 'Document Type'
     param :form, "document", :file, :required, 'Document'
+    param :form, :order, :integer, :required, 'Order'
     param :header, :Authorization, :string, :required, 'Authorization'
   end
 
   # POST /users/:user_id/documents
   def create
-    @user.documents.new(document: params[:document], document_type_id: params[:document_type_id])
+    @user.documents.new(document: params[:document], order: params[:order], document_type_id: params[:document_type_id])
     @user.save!
     render json: @user.documents.last, status: :created
   end
@@ -49,13 +50,14 @@ class DocumentsController < ApplicationController
     param :path, :user_id, :integer, :required, 'User id'
     param :path, :id, :integer, :required, 'Document id'
     param :form, "document", :file, :required, 'Document'
+    param :form, :order, :integer, :required, 'Order'
     param :header, :Authorization, :string, :required, 'Authorization'
   end
 
   # PUT /users/:user_id/documents/:id
   def update
     @document = @user.documents.find_by!(id: params[:id])
-    @document.update(document: params[:document])
+    @document.update(document: params[:document], order: params[:order])
     head :no_content
   end
 
@@ -86,7 +88,8 @@ class DocumentsController < ApplicationController
     params.permit(
       :document_type_id, 
       :user_id, 
-      :document
+      :document,
+      :order
     )
   end  
   

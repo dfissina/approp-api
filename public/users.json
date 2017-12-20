@@ -126,25 +126,6 @@
       ]
     },
     {
-      "path": "/users/exists",
-      "operations": [
-        {
-          "summary": "User exists",
-          "parameters": [
-            {
-              "paramType": "form",
-              "name": "email",
-              "type": "string",
-              "description": "Email",
-              "required": true
-            }
-          ],
-          "nickname": "Users#exists",
-          "method": "post"
-        }
-      ]
-    },
-    {
       "path": "/users/activate",
       "operations": [
         {
@@ -178,6 +159,44 @@
             }
           ],
           "nickname": "Users#check_send_documents",
+          "method": "post"
+        }
+      ]
+    },
+    {
+      "path": "/users/exists",
+      "operations": [
+        {
+          "summary": "User exists",
+          "parameters": [
+            {
+              "paramType": "form",
+              "name": "email",
+              "type": "string",
+              "description": "Email",
+              "required": true
+            }
+          ],
+          "nickname": "Users#exists",
+          "method": "post"
+        }
+      ]
+    },
+    {
+      "path": "/users/recoverUser",
+      "operations": [
+        {
+          "summary": "Recover User for change password",
+          "parameters": [
+            {
+              "paramType": "form",
+              "name": "hashcode",
+              "type": "string",
+              "description": "Hashcode",
+              "required": true
+            }
+          ],
+          "nickname": "Users#recoverUser",
           "method": "post"
         }
       ]
