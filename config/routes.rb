@@ -5,9 +5,10 @@ Rails.application.routes.draw do
       get 'profile', to: 'users#profile'
       post 'recovery', to: 'users#recovery'
       post 'signup', to: 'users#create'
-      post 'exists', to: 'users#exists'
       post 'activate', to: 'users#activate'
       post 'check_send_documents', to: 'users#check_send_documents'
+      post 'exists', to: 'users#exists'
+      post 'recoverUser', to: 'users#recoverUser'
     end
     resources :properties
     resources :documents

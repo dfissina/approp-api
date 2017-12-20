@@ -26,7 +26,7 @@ class MessageContactsController < ApplicationController
 
   # POST /messages
   def create   
-    
+
     @message = MessageContact.new(
       email: message_contacts_params[:email],
       name: message_contacts_params[:name],
@@ -57,7 +57,7 @@ class MessageContactsController < ApplicationController
       :email,
       :message,
       :property_id,
-      :sender_user_id,
+      :user_id,
       #:user
     )
   end

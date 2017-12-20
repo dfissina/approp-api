@@ -43,7 +43,7 @@ class UsersController < ApplicationController
       render json:  { message: Message.account_created, hashcode: accountHash.hashcode }
     else
       json_response({error: 'El email ya se encuentra registrado en Approp'}, :unprocessable_entity)
-    end      
+    end
   end
 
   swagger_api :show do
@@ -80,7 +80,12 @@ class UsersController < ApplicationController
       @user.password_reseted = false
       accountHash = AccountHash.find_by_user_id(@user.id)
       if accountHash.present?
-        accountHash.destroy!
+        if accountHash.temp_email.nil?
+          accountHash.destroy!
+        else
+          accountHash.password = nil
+          accountHash.save!
+        end
       end
       @user.update(user_params)
       head :no_content
@@ -96,6 +101,10 @@ class UsersController < ApplicationController
         accountHash = AccountHash.find_by_user_id(@user.id)
         unless accountHash.present?
           accountHash = AccountHash.create(:hashcode => create_hashcode, :user_id => @user.id, :password => nil, :temp_email => user_params[:email])
+        end
+        if accountHash.temp_email.nil?
+          accountHash.temp_email = user_params[:email]
+          accountHash.save!
         end
         AppropMailer.new_email(@user, accountHash).deliver
       else
@@ -138,7 +147,7 @@ class UsersController < ApplicationController
       return json_response({error: 'Email cannot be blank'}, :unprocessable_entity)
     end
     user = User.find_by_email(params[:email])
-    if user.present?
+    if user.present? && user.account_active?
       if user.password_reseted
         accountHash = AccountHash.find_by_user_id(user.id)
       else
@@ -146,15 +155,25 @@ class UsersController < ApplicationController
         user.password = passwordHash
         user.password_reseted = true
         user.save!
-        accountHash = AccountHash.create(:hashcode => create_hashcode, :user_id => user.id, :password => passwordHash, :temp_email => nil)
+        accountHash = AccountHash.find_by_user_id(user.id)
+        if accountHash.present?
+          accountHash.password = passwordHash
+          accountHash.save!
+        else
+          accountHash = AccountHash.create(:hashcode => create_hashcode, :user_id => user.id, :password => passwordHash, :temp_email => nil)
+        end
       end
       AppropMailer.recovery_mail(user, accountHash).deliver
       render json: {
-          status: 'Password has been reseted',
+          message: 'Password has been reseted',
           hashcode: accountHash.hashcode
       }
     else
-      json_response({error: 'User not found'}, :unprocessable_entity)
+      if !user.present?
+        json_response({error: 'User not found'}, :unprocessable_entity)
+      elsif !user.account_active?
+        json_response({error: 'Account not active'}, '497')
+      end
     end
   end
   
@@ -191,7 +210,12 @@ class UsersController < ApplicationController
       else
         user.email = accountHash.temp_email
         user.save!
-        accountHash.destroy!
+        if accountHash.password.nil?
+          accountHash.destroy!
+        else
+          accountHash.temp_email = nil
+          accountHash.save!
+        end
         render json: { message: Message.email_updated }
       end
     else
