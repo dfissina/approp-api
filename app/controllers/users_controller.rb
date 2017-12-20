@@ -147,7 +147,7 @@ class UsersController < ApplicationController
       return json_response({error: 'Email cannot be blank'}, :unprocessable_entity)
     end
     user = User.find_by_email(params[:email])
-    if user.present? && user.account_active?
+    if user.present? && user.account_active? && !user.facebook_account
       if user.password_reseted
         accountHash = AccountHash.find_by_user_id(user.id)
       else
@@ -172,7 +172,9 @@ class UsersController < ApplicationController
       if !user.present?
         json_response({error: 'User not found'}, :unprocessable_entity)
       elsif !user.account_active?
-        json_response({error: 'Account not active'}, '497')
+        json_response({error: 'Account not active'}, :unauthorized)
+      elsif user.facebook_account
+        json_response({error: 'Facebook account'}, :unauthorized)
       end
     end
   end
