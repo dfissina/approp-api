@@ -323,6 +323,20 @@
               "required": false
             },
             {
+              "paramType": "form",
+              "name": "user_type",
+              "type": "string",
+              "description": "User Type",
+              "required": false,
+              "allowableValues": {
+                "valueType": "LIST",
+                "values": [
+                  "independiente",
+                  "dependiente"
+                ]
+              }
+            },
+            {
               "paramType": "header",
               "name": "Authorization",
               "type": "string",

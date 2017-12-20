@@ -69,6 +69,7 @@ class UsersController < ApplicationController
     param :form, :phone, :string, :optional, 'Teléfono'
     param :form, :cell_phone, :string, :optional, 'Celular'
     param :form, :profile_picture, :file, :optional, 'Foto de perfil'
+    param_list :form, :user_type, :string, :optional, 'User Type', ['independiente', 'dependiente']
     param :header, :Authorization, :string, :required, 'Authorization'
   end
 
@@ -87,8 +88,6 @@ class UsersController < ApplicationController
           accountHash.save!
         end
       end
-      @user.update(user_params)
-      head :no_content
     end
 
     #Email unique validation
@@ -107,10 +106,10 @@ class UsersController < ApplicationController
           accountHash.save!
         end
         AppropMailer.new_email(@user, accountHash).deliver
-      else
-        @user.update(user_params)
       end
     end
+    
+    @user.update(user_params)
     head :no_content
   end
 
@@ -143,25 +142,18 @@ class UsersController < ApplicationController
 
   #POST /users/recovery
   def recovery
-    if params[:email].blank?
-      return json_response({error: 'Email cannot be blank'}, :unprocessable_entity)
-    end
+    return json_response({error: 'Email cannot be blank'}, :unprocessable_entity) if params[:email].blank?
     user = User.find_by_email(params[:email])
     if user.present? && user.account_active? && !user.facebook_account
-      if user.password_reseted
-        accountHash = AccountHash.find_by_user_id(user.id)
-      else
+      accountHash = AccountHash.find_by_user_id(user.id)
+      accountHash.new(:hashcode => create_hashcode, :user_id => user.id, :temp_email => nil) if !accountHash.present?
+      if !user.password_reseted
         passwordHash = User.generate_password
         user.password = passwordHash
         user.password_reseted = true
         user.save!
-        accountHash = AccountHash.find_by_user_id(user.id)
-        if accountHash.present?
-          accountHash.password = passwordHash
-          accountHash.save!
-        else
-          accountHash = AccountHash.create(:hashcode => create_hashcode, :user_id => user.id, :password => passwordHash, :temp_email => nil)
-        end
+        accountHash.password = passwordHash
+        accountHash.save!
       end
       AppropMailer.recovery_mail(user, accountHash).deliver
       render json: {
@@ -173,7 +165,7 @@ class UsersController < ApplicationController
         json_response({error: 'User not found'}, :unprocessable_entity)
       elsif !user.account_active?
         json_response({error: 'Account not active'}, :unauthorized)
-      elsif user.facebook_account
+      else
         json_response({error: 'Facebook account'}, :unauthorized)
       end
     end
@@ -202,6 +194,7 @@ class UsersController < ApplicationController
   def activate
     accountHash = AccountHash.find_by_hashcode(params[:hashcode])
     user = User.find_by(id: accountHash.user_id)
+    return json_response({error: 'User not found'}, :unprocessable_entity) if !user.present?
     if user.present?
       if accountHash.temp_email.nil?
         user.account_active = true
@@ -220,8 +213,6 @@ class UsersController < ApplicationController
         end
         render json: { message: Message.email_updated }
       end
-    else
-      json_response({error: 'User not found'}, :unprocessable_entity)
     end
   end
 
@@ -263,6 +254,7 @@ class UsersController < ApplicationController
   def user_params
     # whitelist params
     params.permit(
+      :id,
       :first_name, 
       :last_name, 
       :email, 
@@ -272,7 +264,8 @@ class UsersController < ApplicationController
       :cell_phone,
       :password_confirmation,
       :rol,
-      :profile_picture
+      :profile_picture,
+      :user_type
     )
   end
   

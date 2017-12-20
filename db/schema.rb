@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171220173647) do
+ActiveRecord::Schema.define(version: 20171220214327) do
 
   create_table "account_hashes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci" do |t|
     t.string "hashcode"
@@ -164,6 +164,7 @@ ActiveRecord::Schema.define(version: 20171220173647) do
     t.boolean "facebook_account"
     t.datetime "last_login"
     t.boolean "send_documents"
+    t.integer "user_type"
   end
 
   add_foreign_key "account_hashes", "users"
