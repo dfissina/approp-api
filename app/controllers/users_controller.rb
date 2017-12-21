@@ -69,7 +69,7 @@ class UsersController < ApplicationController
     param :form, :phone, :string, :optional, 'Teléfono'
     param :form, :cell_phone, :string, :optional, 'Celular'
     param :form, :profile_picture, :file, :optional, 'Foto de perfil'
-    param_list :form, :user_type, :string, :optional, 'User Type', ['independiente', 'dependiente']
+    param_list :form, :user_type, :string, :optional, 'User Type', ['independiente', 'dependiente', 'null']
     param :header, :Authorization, :string, :required, 'Authorization'
   end
 

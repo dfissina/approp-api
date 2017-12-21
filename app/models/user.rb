@@ -21,7 +21,7 @@ class User < ApplicationRecord
   enum rol: [:customer, :agent, :admin]
   #validates :rol, :email, presence: true
     
-  enum user_type: [:independiente, :dependiente]
+  enum user_type: [:independiente, :dependiente, :null]
     
   mount_uploader :profile_picture, ProfilePictureUploader
   

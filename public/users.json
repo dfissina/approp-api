@@ -332,7 +332,8 @@
                 "valueType": "LIST",
                 "values": [
                   "independiente",
-                  "dependiente"
+                  "dependiente",
+                  "null"
                 ]
               }
             },
