@@ -23,28 +23,35 @@
 	<p style="margin-bottom: 15px; border-bottom: 1px solid #ccc;">
 		<%= image_tag attachments['logo.png'].url, :class => "logo" %>
 	</p>
+	
 	<h2>Hola <%= @user_to.first_name %> <%= @user_to.last_name %></h2>
-	<h2><%= @message.name %> está interesado en tu propiedad: </h2>
+	
+	<h2><%= @message.name %> ha escrito: </h2>
+	
+	<p style="font-size: 14px;"><%= @message.message %></p>
+	
+	<p>
+		[ Email: <%= @message.email %> - Tel: 
+		<% if @message.phone %>
+		  <%= @message.phone %>
+		<% else %>
+		  --
+		<% end %>
+		]
+	</p>
+	<p style="paddin: 5px;border-bottom: 1px solid #ccc;"></p>
+	<h3>Para la propiedad</h3>
 	<h3>"<%= @property.title %>"</h3>
+	<h3><%= link_to "[Ver Propiedad en APPROP]", "http://www.approp.cl/results?cod="+@property.id.to_s, :target => "_blank" %></h3>
 	<div style="margin: 0 auto;width: 100%;" >
 		<%= image_tag attachments['property_principal.jpg'].url, :class => "principal_photo" %>
 	</div>
 	
-	<p style="font-size: 14px;">
-		Ha escrito:<br>	
-		<%= @message.message %>
-	</p>
-	<p>
-	  <b>Puede contactarse con él a través de:</b>
-	</p>
-	<p>Email: <%= @message.email %></p>
-	<p>Tel:
-		<% if @objectname %>
-		  <%= @message.phone %>
-		<% else %>
-		  --
-		<% end %>		
-	</p>
+	<h3>Datos del propietario ó publicador:</h3>
+	<p>Nombre: <%=@property.user.first_name %>, <%=@property.user.last_name %></p>
+	<p>Email: <%=@property.user.email %></p>
+	<p>Tel / Celular: <%=@property.user.phone %> / <%=@property.user.cell_phone %> </p>
+	
 	<p style="paddin: 5px;border-bottom: 1px solid #ccc;"></p>
 	<p> Enviado desde <%= link_to "www.approp.cl", "http://www.approp.cl", :target => "_blank" %></p>
 	<p>Siguenos en</p>
