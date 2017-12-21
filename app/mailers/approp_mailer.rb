@@ -12,8 +12,9 @@ class AppropMailer < ApplicationMailer
     end
   end
   
-  def message_contact_mail(message, user, property)
-    @user = user
+  def message_contact_mail(message, user_to, user_from, property, send_documents)
+    @user_to = user_to
+    @user_from = user_from
     @message = message
     @property = property
     attachments.inline["logo.png"] = File.read("#{Rails.root}/app/assets/img/logo.png")
@@ -24,8 +25,14 @@ class AppropMailer < ApplicationMailer
     end       
     attachments.inline["face.png"] = File.read("#{Rails.root}/app/assets/img/facebook-128.png")
     attachments.inline["twitter.png"] = File.read("#{Rails.root}/app/assets/img/twitter-128.png")
-    attachments.inline["linkedin.png"] = File.read("#{Rails.root}/app/assets/img/linkedin-128.png")    
-    mail(to: @user.email, subject: 'Approp - Nuevo mensaje de contacto') do |format|
+    attachments.inline["linkedin.png"] = File.read("#{Rails.root}/app/assets/img/linkedin-128.png")
+    #terminar de hacer  
+#    if send_documents
+#      @user_from.documents.each do |document|
+#        attachments[document.document] = File.read("#{Rails.root}/public/"+document.document.url)
+#      end
+#    end    
+    mail(to: @user_to.email, subject: 'Approp - Nuevo mensaje de contacto') do |format|
       format.html
     end
   end

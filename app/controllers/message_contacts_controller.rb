@@ -21,6 +21,7 @@ class MessageContactsController < ApplicationController
     param :form, :phone, :string, :optional, 'Telefono'
     param :form, :message, :string, :required, 'Mensaje'
     param :form, :property_id, :integer, :required, 'Property id'
+    param :form, :send_documents, :boolean, :required, 'Enviar documentos'
     param :header, :Authorization, :string, :required, 'Authorization'
   end
 
@@ -37,11 +38,16 @@ class MessageContactsController < ApplicationController
     )
     
     property = Property.find(params[:property_id])
-    user_to = User.find_by_email(property.user.email) if property.user.email
+    
+    # Volver a activar esta linea cuando el correo se vuelva a enviar al dueño de la propiedad.
+    #user_to = User.find_by_email(property.user.email) if property.user.email
+    
+    # Ahora se envia el correo al Admin
+    user_to = User.find_by_rol("admin")
     
     if @message.save! && !user_to.email.blank?
-      AppropMailer.message_contact_mail(@message, user_to, property).deliver
-      json_response({status: 'Mensaje enviado a:'+property.user.email}, :created)
+      AppropMailer.message_contact_mail(@message, user_to, current_user, property, message_contacts_params[:send_documents]).deliver
+      json_response({status: 'Mensaje enviado a:'+user_to.email}, :created)
     else
       json_response({error: 'El destinatario no tiene un email cargado en Approp'}, :unprocessable_entity)      
     end
@@ -58,7 +64,7 @@ class MessageContactsController < ApplicationController
       :message,
       :property_id,
       :user_id,
-      #:user
+      :send_documents      
     )
   end
 end
