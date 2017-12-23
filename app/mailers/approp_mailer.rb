@@ -26,12 +26,16 @@ class AppropMailer < ApplicationMailer
     attachments.inline["face.png"] = File.read("#{Rails.root}/app/assets/img/facebook-128.png")
     attachments.inline["twitter.png"] = File.read("#{Rails.root}/app/assets/img/twitter-128.png")
     attachments.inline["linkedin.png"] = File.read("#{Rails.root}/app/assets/img/linkedin-128.png")
-    #terminar de hacer  
-#    if send_documents
-#      @user_from.documents.each do |document|
-#        attachments[document.document] = File.read("#{Rails.root}/public/"+document.document.url)
-#      end
-#    end    
+     
+    if send_documents == "true"     
+      @user_from.documents.each do |document|
+        document_type_name = document.document_type.name.downcase
+        document_type_name = document_type_name.gsub! ' ', '_'
+        document_type_name = document_type_name + '_' + document.order.to_s + '.' + document.document.url.split('.')[1]       
+        attachments[document_type_name] = {:mime_type => 'application/x-gzip', 
+                                           :content => File.read("#{Rails.root}/public/"+document.document.url)}
+      end
+    end    
     mail(to: @user_to.email, subject: 'Approp - Nuevo mensaje de contacto') do |format|
       format.html
     end
