@@ -9,7 +9,21 @@ namespace :scraper do
 	
     operaciones = ['arriendo', 'venta']
     tipos = ['parcela', 'terreno-en-construccion', 'departamento', 'casa']
-    comunas = ['chicureo-colina-chacabuco-metropolitana', 'providencia-metropolitana', 'las-condes-metropolitana', 'nunoa-metropolitana', 'centro-historico-de-santiago-santiago-santiago-metropolitana']
+    comunas = [
+    	'colina-metropolitana',
+    	'las-brisas-de-chicureo-colina-chacabuco-metropolitana',
+	    'chicureo-colina-chacabuco-metropolitana',
+	    'algarrobal-colina-chacabuco-metropolitana',
+	    'chamiserola-reserva-colina-chacabuco-metropolitana',
+	    'chicureo-oriente-colina-chacabuco-metropolitana',
+	    'chicureo-poniente-colina-chacabuco-metropolitana',
+	    'colina-centro-chacabuco-metropolitana',
+	    'liraylo-pinto-colina-chacabuco-metropolitana',
+	    'piedra-roja-colina-chacabuco-metropolitana',
+	    'providencia-metropolitana', 
+	    'las-condes-metropolitana', 
+	    'nunoa-metropolitana', 
+	    'centro-historico-de-santiago-santiago-santiago-metropolitana']
     
     comunas.each do |comuna|
 	    tipos.each do |tipo|
