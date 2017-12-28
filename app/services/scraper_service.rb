@@ -22,7 +22,11 @@ class ScraperService
 
   def process_property(url, tipo, operacion)
     data = parse(url)
-    data[:tipo] = tipo
+    if tipo == 'terreno-en-construccion'
+      data[:tipo] = 'terreno'
+    else
+      data[:tipo] = tipo
+    end    
     data[:operacion] = operacion
     if Property.find_by(cod: data[:codigo]).present?
       puts "Propiedad con codigo: #{data[:codigo]} ya existe :c"
@@ -57,12 +61,6 @@ class ScraperService
     
     raise "No se encontro la comuna #{comuna_limpia} se limpio: #{data[:comuna]}" if comuna.blank?
     
-    if data[:tipo] == 'terreno-en-construccion'
-      property_type = 'terreno'
-    else
-      property_type = data[:tipo]
-    end
-    
     property = Property.create(
       title: data[:titulo],
       description: data[:descripcion],
@@ -76,7 +74,7 @@ class ScraperService
       currency: 'clp',
       user_id: user.id,
       created_at: data[:publicada],
-      property_type: property_type,
+      property_type: data[:tipo],
       operation: data[:operacion],
       state: 'usada',
       orientation: 'norte',
@@ -116,7 +114,9 @@ class ScraperService
     construida_idx = superficies.find_index { |obj| obj.include?('construida') || obj.include?('til') }
     total_idx = superficies.find_index { |obj| obj.include?('terreno') || obj.include?('total') }
     superficie_construida = (superficies[construida_idx]&.to_i || 0) if construida_idx
-    superficie_total = (superficies[total_idx]&.to_i || 0) if total_idx
+    superficie_total = (superficies[total_idx]&.gsub('.', '').to_i || 0) if total_idx
+    
+    
     mini_ficha = page.css('div.propiedad-ficha-mini')
     codigo_publicada = mini_ficha.css('.operation-internal-code strong').map(&:text)
     codigo_idx = codigo_publicada.find_index { |obj| obj.include?('digo') }
@@ -132,6 +132,22 @@ class ScraperService
     telefono = datos_contacto[:telefonosVendedor]
     email = datos_contacto[:emailVendedor]
     comuna = page.css('.breadcrumb li').last.text
+    
+    if hab == nil
+      hab = 0
+    end
+    
+    if ban == nil
+      ban = 0
+    end
+    
+    if superficie_total == nil
+      superficie_total = 0
+    end
+    
+    if superficie_construida == nil
+      superficie_construida = 0
+    end
   
     return {
       titulo: titulo,

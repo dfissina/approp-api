@@ -7,9 +7,9 @@ namespace :scraper do
 	#https://www.portalinmobiliario.com/venta/departamento/nunoa-metropolitana?ca=3
 	#https://www.portalinmobiliario.com/venta/departamento/centro-historico-de-santiago-santiago-santiago-metropolitana?ca=3
 	
-    operaciones = ['venta', 'arriendo']
+    operaciones = ['arriendo', 'venta']
     tipos = ['parcela', 'terreno-en-construccion', 'departamento', 'casa']
-    comunas = ['providencia-metropolitana', 'las-condes-metropolitana', 'nunoa-metropolitana', 'centro-historico-de-santiago-santiago-santiago-metropolitana', 'chicureo-colina-chacabuco-metropolitana']
+    comunas = ['chicureo-colina-chacabuco-metropolitana', 'providencia-metropolitana', 'las-condes-metropolitana', 'nunoa-metropolitana', 'centro-historico-de-santiago-santiago-santiago-metropolitana']
     
     comunas.each do |comuna|
 	    tipos.each do |tipo|
@@ -28,10 +28,13 @@ namespace :scraper do
 	          	puts "Starting job for page: #{pagina} & tipo: #{tipo} & operacion: #{operacion}"
 	          	#puts "Starting job for page: #{pagina} & tipo: casa & operacion: venta"
 	          	ScraperJob.perform_now(url_resultados, tipo, operacion)
-	
-	          	last_page_class = page.css('ul.pagination li')[-1].attr('class')
+				if page.css('ul.pagination').size > 0
+	          		last_page_class = page.css('ul.pagination li')[-1].attr('class')
+	          	else
+	          		last_page_class = 'active'
+	          	end
 	          	pagina += 1
-	          else
+	          else	          	
 	          	last_page_class = 'active'
 	          end
 	        end

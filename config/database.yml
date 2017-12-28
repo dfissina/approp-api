@@ -5,7 +5,7 @@ default: &default
   username: <%= ENV['DB_USER'] %>
   password: <%= ENV['DB_PASS'] %>
   reconnect: true
-#  socket: /opt/lampp/var/mysql/mysql.sock
+# socket: /opt/lampp/var/mysql/mysql.sock
 
 development:
   <<: *default
@@ -20,4 +20,4 @@ test:
 production:
   <<: *default
   database: approp
-  host: approp-api-db
+  host: approp-api-db  
