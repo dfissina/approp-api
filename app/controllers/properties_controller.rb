@@ -155,12 +155,12 @@ class PropertiesController < ApplicationController
     
     if params[:lat].present? && params[:lng].present?
       if params[:radius].present?
-        @properties = @properties.within(params[:radius], :origin => [params[:lat], params[:lng]]).order('lat, lng desc')
+        @properties = @properties.within(params[:radius], :origin => [params[:lat], params[:lng]]).order('lat, lng, created_at DESC')
       else
-        @properties = @properties.within(500, :origin => [params[:lat], params[:lng]]).order('lat, lng desc')
+        @properties = @properties.within(500, :origin => [params[:lat], params[:lng]]).order('lat, lng, created_at DESC')
       end
     end
-
+    @properties = @properties.order('created_at DESC')
     properties_size = @properties.size
     
     if params[:resultsperpage].present?
