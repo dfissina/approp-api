@@ -10,6 +10,7 @@ namespace :scraper do
     operaciones = ['arriendo', 'venta']
     tipos = ['parcela', 'terreno-en-construccion', 'departamento', 'casa']
     comunas = [
+    	'santiago-metropolitana',
     	'colina-metropolitana',
     	'las-brisas-de-chicureo-colina-chacabuco-metropolitana',
 	    'chicureo-colina-chacabuco-metropolitana',
