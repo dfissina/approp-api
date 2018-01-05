@@ -99,7 +99,7 @@ class ScraperService
     response = Faraday.get url
     page = Nokogiri::HTML(response.body)
     titulo = page.css('h4.media-block-title').first.text.strip
-    descripcion = page.css('div.propiedad-descr').text.strip
+    descripcion = page.css('div.propiedad-descr')
     direccion = page.css('.data-sheet-column-address').text.gsub('Dirección', '').gsub('Direccion', '').strip
     hab_ban = page.css('.data-sheet-column-programm p').to_s.gsub('<p>', '').gsub('</p>', '').gsub('&amp;nbsp', ' ').split('<br>')
     dorm_idx = hab_ban.find_index { |obj| obj.include?('Dormitorio') }
